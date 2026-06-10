@@ -131,6 +131,12 @@
     @apply py-20 md:py-28;
   }
 
+  /* Float animation for hero cards */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-10px); }
+  }
+
   /* Hide scrollbar */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
