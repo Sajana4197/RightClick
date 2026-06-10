@@ -1,6 +1,6 @@
 // src/components/sections/HeroSection.jsx
 import { useRef } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FaArrowRight,
   FaShieldAlt,
@@ -20,7 +20,7 @@ const CARDS = [
     icon: <MdMonitor className="text-brand-blue text-lg" />,
     title: "24/7 Monitoring",
     sub: "Always On. Always Secure.",
-    position: "top-[8%] right-[2%]",
+    position: "top-[8%] right-[8%]",
     delay: 0.5,
     floatDur: "5s",
   },
@@ -29,7 +29,7 @@ const CARDS = [
     icon: <FaShieldAlt className="text-brand-blue text-lg" />,
     title: "Cyber Security",
     sub: "Protecting What Matters.",
-    position: "top-[33%] right-[-3%]",
+    position: "top-[32%] right-[2%]",
     delay: 0.7,
     floatDur: "6s",
   },
@@ -38,7 +38,7 @@ const CARDS = [
     icon: <FaCloud className="text-brand-blue text-lg" />,
     title: "Cloud Solutions",
     sub: "Scalable. Reliable. Secure.",
-    position: "bottom-[28%] right-[-1%]",
+    position: "bottom-[28%] right-[4%]",
     delay: 0.9,
     floatDur: "5.5s",
   },
@@ -47,7 +47,7 @@ const CARDS = [
     icon: <FaHeadset className="text-brand-blue text-lg" />,
     title: "IT Support",
     sub: "Fast. Friendly. Reliable.",
-    position: "bottom-[6%] right-[8%]",
+    position: "bottom-[6%] right-[14%]",
     delay: 1.1,
     floatDur: "4.8s",
   },
@@ -96,31 +96,9 @@ function FloatingCard({ card }) {
 }
 
 export default function HeroSection() {
-  const heroRef = useRef(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 50, damping: 18 });
-  const springY = useSpring(mouseY, { stiffness: 50, damping: 18 });
-  const rotateX = useTransform(springY, [-300, 300], [5, -5]);
-  const rotateY = useTransform(springX, [-400, 400], [-7, 7]);
-
-  const handleMouseMove = (e) => {
-    const rect = heroRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set(e.clientX - rect.left - rect.width / 2);
-    mouseY.set(e.clientY - rect.top - rect.height / 2);
-  };
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
   return (
     <section
       id="home"
-      ref={heroRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-dark-900"
       style={{ paddingTop: "72px" }}
     >
@@ -132,14 +110,17 @@ export default function HeroSection() {
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.35 }}
+          style={{ opacity: 0.75 }}
         >
-          <source src="../../../assets/videos/hero.mp4" type="video/mp4" />
+          <source src="/hero.mp4" type="video/mp4" />
         </video>
-        {/* Dark overlay so text stays readable */}
+        {/* Dark overlay */}
         <div
           className="absolute inset-0"
-          style={{ background: "rgba(5,10,20,0.72)" }}
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(4,8,18,0.9) 0%, rgba(4,8,18,0.55) 35%, rgba(4,8,18,0.08) 75%, transparent 100%)",
+          }}
         />
         {/* Blue radial glow top-right */}
         <div
@@ -149,7 +130,7 @@ export default function HeroSection() {
               "radial-gradient(ellipse at 75% 15%, rgba(30,144,255,0.12) 0%, transparent 65%)",
           }}
         />
-        {/* Bottom fade to next section */}
+        {/* Bottom fade */}
         <div
           className="absolute bottom-0 left-0 w-full h-40"
           style={{
@@ -168,7 +149,6 @@ export default function HeroSection() {
             animate="visible"
             className="flex flex-col justify-center order-2 lg:order-1"
           >
-            {/* Eyebrow */}
             <motion.div
               variants={fadeInUp}
               className="flex items-center gap-2 mb-5"
@@ -179,7 +159,6 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Headline */}
             <motion.h1
               variants={fadeInUp}
               className="font-extrabold leading-[1.06] tracking-tight text-white mb-4"
@@ -190,7 +169,6 @@ export default function HeroSection() {
               Built for <span className="text-gradient-blue">Growth.</span>
             </motion.h1>
 
-            {/* Body */}
             <motion.p
               variants={fadeInUp}
               className="text-neutral-300 text-base lg:text-lg leading-relaxed max-w-[440px] mb-8"
@@ -199,7 +177,6 @@ export default function HeroSection() {
               business secure, productive, and always ahead.
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               variants={fadeInUp}
               className="flex flex-wrap gap-3 mb-12"
@@ -220,7 +197,6 @@ export default function HeroSection() {
               </button>
             </motion.div>
 
-            {/* Stats */}
             <motion.div
               variants={staggerContainer(0.08, 0)}
               initial="hidden"
@@ -247,11 +223,38 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right — Globe */}
-          <div className="relative flex items-center justify-center order-1 lg:order-2 h-[380px] sm:h-[500px] lg:h-auto lg:min-h-[600px]">
+          {/* Right — Floating cards only */}
+          <div className="relative order-1 lg:order-2 h-[300px] sm:h-[400px] lg:h-auto lg:min-h-[560px]">
+            {/* Desktop floating cards */}
             <div className="hidden lg:block absolute inset-0">
               {CARDS.map((card) => (
                 <FloatingCard key={card.id} card={card} />
+              ))}
+            </div>
+
+            {/* Mobile — stacked cards */}
+            <div className="flex lg:hidden flex-col gap-3 w-full max-w-xs mx-auto pt-4">
+              {CARDS.map((card) => (
+                <motion.div
+                  key={card.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: card.delay }}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 backdrop-blur-md"
+                  style={{ background: "rgba(8,14,28,0.88)" }}
+                >
+                  <div className="w-9 h-9 rounded-lg bg-brand-blue/15 border border-brand-blue/25 flex items-center justify-center flex-shrink-0">
+                    {card.icon}
+                  </div>
+                  <div>
+                    <p className="text-white text-sm font-semibold leading-tight">
+                      {card.title}
+                    </p>
+                    <p className="text-neutral-400 text-[11px] leading-tight mt-0.5">
+                      {card.sub}
+                    </p>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
