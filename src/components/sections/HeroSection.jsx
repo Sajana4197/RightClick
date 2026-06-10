@@ -1,101 +1,119 @@
 // src/components/sections/HeroSection.jsx
-import { useRef } from 'react'
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
-import { FaArrowRight, FaShieldAlt, FaCloud, FaHeadset, FaChartLine } from 'react-icons/fa'
-import { MdMonitor } from 'react-icons/md'
-import { HiStar } from 'react-icons/hi'
-import { BsArrowDownCircle } from 'react-icons/bs'
-import AnimatedGlobe from '../AnimatedGlobe'
-import { scrollToSection } from '../../hooks/useLenis'
-import { fadeInUp, staggerContainer } from '../../animations/variants'
+import { useRef } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import {
+  FaArrowRight,
+  FaShieldAlt,
+  FaCloud,
+  FaHeadset,
+  FaChartLine,
+} from "react-icons/fa";
+import { MdMonitor } from "react-icons/md";
+import { HiStar } from "react-icons/hi";
+import { BsArrowDownCircle } from "react-icons/bs";
+import { scrollToSection } from "../../hooks/useLenis";
+import { fadeInUp, staggerContainer } from "../../animations/variants";
 
 const CARDS = [
   {
-    id: 'monitoring',
+    id: "monitoring",
     icon: <MdMonitor className="text-brand-blue text-lg" />,
-    title: '24/7 Monitoring',
-    sub: 'Always On. Always Secure.',
-    position: 'top-[8%] right-[2%]',
+    title: "24/7 Monitoring",
+    sub: "Always On. Always Secure.",
+    position: "top-[8%] right-[2%]",
     delay: 0.5,
-    floatDur: '5s',
+    floatDur: "5s",
   },
   {
-    id: 'cyber',
+    id: "cyber",
     icon: <FaShieldAlt className="text-brand-blue text-lg" />,
-    title: 'Cyber Security',
-    sub: 'Protecting What Matters.',
-    position: 'top-[33%] right-[-3%]',
+    title: "Cyber Security",
+    sub: "Protecting What Matters.",
+    position: "top-[33%] right-[-3%]",
     delay: 0.7,
-    floatDur: '6s',
+    floatDur: "6s",
   },
   {
-    id: 'cloud',
+    id: "cloud",
     icon: <FaCloud className="text-brand-blue text-lg" />,
-    title: 'Cloud Solutions',
-    sub: 'Scalable. Reliable. Secure.',
-    position: 'bottom-[28%] right-[-1%]',
+    title: "Cloud Solutions",
+    sub: "Scalable. Reliable. Secure.",
+    position: "bottom-[28%] right-[-1%]",
     delay: 0.9,
-    floatDur: '5.5s',
+    floatDur: "5.5s",
   },
   {
-    id: 'support',
+    id: "support",
     icon: <FaHeadset className="text-brand-blue text-lg" />,
-    title: 'IT Support',
-    sub: 'Fast. Friendly. Reliable.',
-    position: 'bottom-[6%] right-[8%]',
+    title: "IT Support",
+    sub: "Fast. Friendly. Reliable.",
+    position: "bottom-[6%] right-[8%]",
     delay: 1.1,
-    floatDur: '4.8s',
+    floatDur: "4.8s",
   },
-]
+];
 
 const STATS = [
-  { icon: <FaShieldAlt />, value: '99.9%', label: 'System Uptime' },
-  { icon: <FaHeadset />,   value: '24/7',  label: 'Expert Support' },
-  { icon: <FaChartLine />, value: '40%',   label: 'Lower IT Costs' },
-  { icon: <HiStar />,      value: '500+',  label: 'Businesses Trust Us' },
-]
+  { icon: <FaShieldAlt />, value: "99.9%", label: "System Uptime" },
+  { icon: <FaHeadset />, value: "24/7", label: "Expert Support" },
+  { icon: <FaChartLine />, value: "40%", label: "Lower IT Costs" },
+  { icon: <HiStar />, value: "500+", label: "Businesses Trust Us" },
+];
 
 function FloatingCard({ card }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: card.delay }}
+      transition={{
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1],
+        delay: card.delay,
+      }}
       className={`absolute ${card.position} z-20`}
-      style={{ animation: `float ${card.floatDur} ease-in-out ${card.delay * 0.5}s infinite` }}
+      style={{
+        animation: `float ${card.floatDur} ease-in-out ${card.delay * 0.5}s infinite`,
+      }}
     >
       <div
         className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 shadow-card backdrop-blur-md"
-        style={{ background: 'rgba(8,14,28,0.90)', minWidth: '185px' }}
+        style={{ background: "rgba(8,14,28,0.90)", minWidth: "185px" }}
       >
         <div className="w-9 h-9 rounded-lg bg-brand-blue/15 border border-brand-blue/25 flex items-center justify-center flex-shrink-0">
           {card.icon}
         </div>
         <div>
-          <p className="text-white text-sm font-semibold leading-tight">{card.title}</p>
-          <p className="text-neutral-400 text-[11px] leading-tight mt-0.5">{card.sub}</p>
+          <p className="text-white text-sm font-semibold leading-tight">
+            {card.title}
+          </p>
+          <p className="text-neutral-400 text-[11px] leading-tight mt-0.5">
+            {card.sub}
+          </p>
         </div>
       </div>
     </motion.div>
-  )
+  );
 }
 
 export default function HeroSection() {
-  const heroRef = useRef(null)
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const springX = useSpring(mouseX, { stiffness: 50, damping: 18 })
-  const springY = useSpring(mouseY, { stiffness: 50, damping: 18 })
-  const rotateX = useTransform(springY, [-300, 300], [5, -5])
-  const rotateY = useTransform(springX, [-400, 400], [-7, 7])
+  const heroRef = useRef(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 50, damping: 18 });
+  const springY = useSpring(mouseY, { stiffness: 50, damping: 18 });
+  const rotateX = useTransform(springY, [-300, 300], [5, -5]);
+  const rotateY = useTransform(springX, [-400, 400], [-7, 7]);
 
   const handleMouseMove = (e) => {
-    const rect = heroRef.current?.getBoundingClientRect()
-    if (!rect) return
-    mouseX.set(e.clientX - rect.left - rect.width / 2)
-    mouseY.set(e.clientY - rect.top - rect.height / 2)
-  }
-  const handleMouseLeave = () => { mouseX.set(0); mouseY.set(0) }
+    const rect = heroRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set(e.clientX - rect.left - rect.width / 2);
+    mouseY.set(e.clientY - rect.top - rect.height / 2);
+  };
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   return (
     <section
@@ -104,24 +122,45 @@ export default function HeroSection() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-dark-900"
-      style={{ paddingTop: '72px' }}
+      style={{ paddingTop: "72px" }}
     >
-      {/* Backgrounds */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-dots opacity-50" />
+      {/* Background video */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0.35 }}
+        >
+          <source src="../../../assets/videos/hero.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay so text stays readable */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "rgba(5,10,20,0.72)" }}
+        />
+        {/* Blue radial glow top-right */}
         <div
           className="absolute top-0 right-0 w-[60%] h-[75%]"
-          style={{ background: 'radial-gradient(ellipse at 75% 15%, rgba(30,144,255,0.14) 0%, transparent 65%)' }}
+          style={{
+            background:
+              "radial-gradient(ellipse at 75% 15%, rgba(30,144,255,0.12) 0%, transparent 65%)",
+          }}
         />
+        {/* Bottom fade to next section */}
         <div
           className="absolute bottom-0 left-0 w-full h-40"
-          style={{ background: 'linear-gradient(to top, rgba(5,10,20,1) 0%, transparent 100%)' }}
+          style={{
+            background:
+              "linear-gradient(to top, rgba(5,10,20,1) 0%, transparent 100%)",
+          }}
         />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[calc(100vh-72px)] py-16 lg:py-0">
-
           {/* Left */}
           <motion.div
             variants={staggerContainer(0.12, 0.05)}
@@ -130,36 +169,52 @@ export default function HeroSection() {
             className="flex flex-col justify-center order-2 lg:order-1"
           >
             {/* Eyebrow */}
-            <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-5">
+            <motion.div
+              variants={fadeInUp}
+              className="flex items-center gap-2 mb-5"
+            >
               <HiStar className="text-brand-blue text-xs" />
-              <span className="eyebrow text-[11px]">Your IT. Our Priority.</span>
+              <span className="eyebrow text-[11px]">
+                Your IT. Our Priority.
+              </span>
             </motion.div>
 
             {/* Headline */}
             <motion.h1
               variants={fadeInUp}
               className="font-extrabold leading-[1.06] tracking-tight text-white mb-4"
-              style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)' }}
+              style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)" }}
             >
               Managed IT.
               <br />
-              Built for{' '}
-              <span className="text-gradient-blue">Growth.</span>
+              Built for <span className="text-gradient-blue">Growth.</span>
             </motion.h1>
 
             {/* Body */}
-            <motion.p variants={fadeInUp} className="text-neutral-300 text-base lg:text-lg leading-relaxed max-w-[440px] mb-8">
-              RightClicks delivers fully managed IT solutions that keep your business
-              secure, productive, and always ahead.
+            <motion.p
+              variants={fadeInUp}
+              className="text-neutral-300 text-base lg:text-lg leading-relaxed max-w-[440px] mb-8"
+            >
+              RightClicks delivers fully managed IT solutions that keep your
+              business secure, productive, and always ahead.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={fadeInUp} className="flex flex-wrap gap-3 mb-12">
-              <button onClick={() => scrollToSection('contact')} className="btn-primary">
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-wrap gap-3 mb-12"
+            >
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="btn-primary"
+              >
                 Get a Free Consultation
                 <FaArrowRight className="text-xs" />
               </button>
-              <button onClick={() => scrollToSection('services')} className="btn-ghost">
+              <button
+                onClick={() => scrollToSection("services")}
+                className="btn-ghost"
+              >
                 Explore Services
                 <FaArrowRight className="text-xs" />
               </button>
@@ -173,14 +228,20 @@ export default function HeroSection() {
               className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-4 border-t border-dark-400/40 pt-7"
             >
               {STATS.map((s) => (
-                <motion.div key={s.label} variants={fadeInUp} className="flex flex-col">
+                <motion.div
+                  key={s.label}
+                  variants={fadeInUp}
+                  className="flex flex-col"
+                >
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <span className="text-brand-blue text-sm">{s.icon}</span>
                     <span className="text-2xl font-extrabold text-white tracking-tight leading-none">
                       {s.value}
                     </span>
                   </div>
-                  <span className="text-neutral-400 text-[11px] leading-snug">{s.label}</span>
+                  <span className="text-neutral-400 text-[11px] leading-snug">
+                    {s.label}
+                  </span>
                 </motion.div>
               ))}
             </motion.div>
@@ -188,14 +249,6 @@ export default function HeroSection() {
 
           {/* Right — Globe */}
           <div className="relative flex items-center justify-center order-1 lg:order-2 h-[380px] sm:h-[500px] lg:h-auto lg:min-h-[600px]">
-            <motion.div
-              style={{ rotateX, rotateY, transformPerspective: 1200 }}
-              className="relative w-full max-w-[460px] lg:max-w-none mx-auto"
-            >
-              <AnimatedGlobe />
-            </motion.div>
-
-            {/* Floating cards — hidden on mobile, shown on lg */}
             <div className="hidden lg:block absolute inset-0">
               {CARDS.map((card) => (
                 <FloatingCard key={card.id} card={card} />
@@ -210,17 +263,19 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 0.8 }}
-        onClick={() => scrollToSection('about')}
+        onClick={() => scrollToSection("about")}
         className="absolute bottom-8 right-8 hidden lg:flex flex-col items-center gap-2 text-neutral-500 hover:text-brand-blue transition-colors duration-300"
       >
-        <span className="text-[10px] tracking-[0.2em] uppercase font-medium">Scroll</span>
+        <span className="text-[10px] tracking-[0.2em] uppercase font-medium">
+          Scroll
+        </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         >
           <BsArrowDownCircle className="text-xl" />
         </motion.div>
       </motion.button>
     </section>
-  )
+  );
 }
