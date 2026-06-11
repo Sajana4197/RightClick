@@ -75,10 +75,12 @@ export default function AboutSection() {
               className="relative rounded-2xl overflow-hidden border border-dark-400/50 shadow-card"
               style={{ aspectRatio: "4/3" }}
             >
-              {/* Real image — update src to your own path if needed */}
+              {/* Real image */}
               <img
-                src="../../../assets/images/about-us.png"
-                alt="RightClicks IT team"
+                src="../../assets/images/about-us.png"
+                alt="RightClicks IT team collaborating in a modern office with global network visualization"
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {/* Subtle dark vignette over image */}
