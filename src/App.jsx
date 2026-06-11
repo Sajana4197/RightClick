@@ -1,12 +1,22 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import ErrorBoundary from './components/ErrorBoundary'
-import { useLenis } from './hooks/useLenis'
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import ErrorBoundary from "./components/ErrorBoundary";
+import { useLenis } from "./hooks/useLenis";
 
 function AppContent() {
-  useLenis()
+  useLenis();
+
+  useEffect(() => {
+    if (window.Cursorly) {
+      const cursor = window.Cursorly.init({
+        cursor: 0,
+        effect: { name: "trail", color: "rainbow" },
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -26,7 +36,7 @@ function AppContent() {
         </Routes>
       </div>
     </>
-  )
+  );
 }
 
 export default function App() {
@@ -36,5 +46,5 @@ export default function App() {
         <AppContent />
       </BrowserRouter>
     </ErrorBoundary>
-  )
+  );
 }

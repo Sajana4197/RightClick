@@ -1,19 +1,35 @@
 // src/pages/Home.jsx
-import { Suspense, lazy } from 'react'
-import HeroSection from '../components/sections/HeroSection'
+import { Suspense, lazy } from "react";
+import HeroSection from "../components/sections/HeroSection";
 
 // Below-the-fold sections are lazy-loaded to reduce initial bundle size
-const AboutSection       = lazy(() => import('../components/sections/AboutSection'))
-const WhyChooseUsSection = lazy(() => import('../components/sections/WhyChooseUsSection'))
-const ProcessSection     = lazy(() => import('../components/sections/ProcessSection'))
-const ServicesSection    = lazy(() => import('../components/sections/ServicesSection'))
-const ReviewsSection     = lazy(() => import('../components/sections/ReviewsSection'))
-const ContactSection     = lazy(() => import('../components/sections/ContactSection'))
-const Footer             = lazy(() => import('../components/Footer'))
+const AboutSection = lazy(() => import("../components/sections/AboutSection"));
+const WhyChooseUsSection = lazy(
+  () => import("../components/sections/WhyChooseUsSection"),
+);
+const ProcessSection = lazy(
+  () => import("../components/sections/ProcessSection"),
+);
+const ServicesSection = lazy(
+  () => import("../components/sections/ServicesSection"),
+);
+const ReviewsSection = lazy(
+  () => import("../components/sections/ReviewsSection"),
+);
+const ContactSection = lazy(
+  () => import("../components/sections/ContactSection"),
+);
+const Footer = lazy(() => import("../components/Footer"));
 
 // Lightweight fallback — matches bg so there's no flash
 function SectionFallback() {
-  return <div className="bg-dark-800" style={{ minHeight: '40vh' }} aria-hidden="true" />
+  return (
+    <div
+      className="bg-dark-800"
+      style={{ minHeight: "40vh" }}
+      aria-hidden="true"
+    />
+  );
 }
 
 export default function Home() {
@@ -44,5 +60,5 @@ export default function Home() {
         <Footer />
       </Suspense>
     </main>
-  )
+  );
 }
