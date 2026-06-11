@@ -141,13 +141,21 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-4 items-center min-h-[calc(100vh-72px)] py-16 lg:py-0">
+        <div className="grid xl:grid-cols-2 gap-8 xl:gap-4 items-center min-h-[calc(100vh-72px)]">
           {/* Left */}
           <motion.div
             variants={staggerContainer(0.12, 0.05)}
             initial="hidden"
             animate="visible"
-            className="flex flex-col justify-center order-2 lg:order-1"
+            className="
+flex
+flex-col
+justify-center
+order-1
+min-h-[calc(100vh-120px)]
+xl:min-h-auto
+pt-0
+"
           >
             <motion.div
               variants={fadeInUp}
@@ -224,16 +232,16 @@ export default function HeroSection() {
           </motion.div>
 
           {/* Right — Floating cards only */}
-          <div className="relative order-1 lg:order-2 h-[300px] sm:h-[400px] lg:h-auto lg:min-h-[560px]">
-            {/* Desktop floating cards */}
-            <div className="hidden lg:block absolute inset-0">
+          <div className="hidden xl:block relative order-2 min-h-[560px]">
+            {/* Show floating cards only on large desktops */}
+            <div className="hidden xl:block absolute inset-0">
               {CARDS.map((card) => (
                 <FloatingCard key={card.id} card={card} />
               ))}
             </div>
 
-            {/* Mobile — stacked cards */}
-            <div className="flex lg:hidden flex-col gap-3 w-full max-w-xs mx-auto pt-4">
+            {/* Hide cards below xl */}
+            <div className="hidden">
               {CARDS.map((card) => (
                 <motion.div
                   key={card.id}

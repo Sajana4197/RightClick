@@ -43,7 +43,7 @@ const REVIEWS = [
 const DEPTH_STYLES = [
   { x: 0, y: 0, scale: 1, blur: 0, opacity: 1, bg: "rgba(255,255,255,1)" },
   {
-    x: 36,
+    x: 28,
     y: -50,
     scale: 0.97,
     blur: 0,
@@ -51,7 +51,7 @@ const DEPTH_STYLES = [
     bg: "rgba(255,255,255,1)",
   },
   {
-    x: 64,
+    x: 50,
     y: -98,
     scale: 0.94,
     blur: 1.5,
@@ -59,8 +59,37 @@ const DEPTH_STYLES = [
     bg: "rgba(255,255,255,0.9)",
   },
   {
-    x: 88,
+    x: 70,
     y: -142,
+    scale: 0.91,
+    blur: 3,
+    opacity: 0.6,
+    bg: "rgba(255,255,255,0.75)",
+  },
+];
+
+// Smaller offsets on narrow screens so cards don't spill outside the viewport
+const DEPTH_STYLES_MOBILE = [
+  { x: 0, y: 0, scale: 1, blur: 0, opacity: 1, bg: "rgba(255,255,255,1)" },
+  {
+    x: 14,
+    y: -28,
+    scale: 0.97,
+    blur: 0,
+    opacity: 1,
+    bg: "rgba(255,255,255,1)",
+  },
+  {
+    x: 26,
+    y: -52,
+    scale: 0.94,
+    blur: 1.5,
+    opacity: 0.85,
+    bg: "rgba(255,255,255,0.9)",
+  },
+  {
+    x: 36,
+    y: -74,
     scale: 0.91,
     blur: 3,
     opacity: 0.6,
@@ -70,10 +99,25 @@ const DEPTH_STYLES = [
 
 const AUTO_ROTATE_INTERVAL = 3500;
 
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < breakpoint : false,
+  );
+  useEffect(() => {
+    const update = () => setIsMobile(window.innerWidth < breakpoint);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 export default function ReviewsSection() {
   // order[0] is the front-most (active) card index into REVIEWS
   const [order, setOrder] = useState([0, 1, 2, 3]);
   const [paused, setPaused] = useState(false);
+  const isMobile = useIsMobile(1024);
+  const depthStyles = isMobile ? DEPTH_STYLES_MOBILE : DEPTH_STYLES;
 
   // Auto-rotate: front card moves to back, next becomes front
   useEffect(() => {
@@ -130,25 +174,21 @@ export default function ReviewsSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Left — Stacked deck */}
           <div
-            className="relative mx-auto w-full"
-            style={{ height: 360, maxWidth: 560 }}
+            className="relative mx-auto w-full flex justify-center lg:block"
+            style={{ height: isMobile ? 280 : 320, maxWidth: 560 }}
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
             <div
-              className="absolute"
+              className="relative lg:absolute w-[88%] sm:w-[420px] lg:w-full max-w-[480px] lg:max-w-[480px] lg:left-0"
               style={{
-                left: "30%",
-                top: "45%",
-                transform: "translate(-50%, -50%)",
-                width: "100%",
-                maxWidth: 560,
+                marginTop: isMobile ? 70 : 150,
               }}
             >
               {order.map((reviewIdx, depth) => {
                 const review = REVIEWS[reviewIdx];
                 const style =
-                  DEPTH_STYLES[depth] || DEPTH_STYLES[DEPTH_STYLES.length - 1];
+                  depthStyles[depth] || depthStyles[depthStyles.length - 1];
                 const isFront = depth === 0;
 
                 return (
@@ -163,13 +203,16 @@ export default function ReviewsSection() {
                       y: style.y,
                       scale: style.scale,
                       opacity: style.opacity,
-                      filter: `blur(${style.blur}px)`,
+                      filter: `blur(${Math.max(style.blur, 0)}px)`,
                       backgroundColor: style.bg,
                       boxShadow: isFront
                         ? "0 20px 50px rgba(0,0,0,0.35)"
                         : "0 10px 30px rgba(0,0,0,0.25)",
                     }}
-                    transition={{ type: "spring", stiffness: 260, damping: 28 }}
+                    transition={{
+                      default: { type: "spring", stiffness: 260, damping: 28 },
+                      filter: { type: "tween", duration: 0.3, ease: "easeOut" },
+                    }}
                   >
                     <div className="flex items-center gap-4">
                       {/* Avatar */}
