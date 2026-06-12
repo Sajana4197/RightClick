@@ -15,7 +15,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   fadeInUp,
   staggerContainer,
-  viewportOnce,
 } from "../../animations/variants";
 import { scrollToSection } from "../../hooks/useLenis";
 
@@ -162,8 +161,7 @@ export default function ServicesSection() {
             <motion.div
               variants={staggerContainer(0.1, 0.05)}
               initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
+              animate="visible"
               className="order-1"
             >
               <motion.p variants={fadeInUp} className="eyebrow mb-3">

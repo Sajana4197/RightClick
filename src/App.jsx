@@ -12,7 +12,7 @@ function AppContent() {
   useEffect(() => {
     if (window.Cursorly) {
       const cursor = window.Cursorly.init({
-        cursor: 0,
+        cursor: 16,
         effect: { name: "trail", color: "rainbow" },
       });
     }
