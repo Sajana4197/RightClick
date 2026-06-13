@@ -1,15 +1,19 @@
 // src/App.jsx
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import Careers from "./pages/Careers";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { useLenis } from "./hooks/useLenis";
 
 function AppContent() {
   useLenis();
+  const location = useLocation();
 
   useEffect(() => {
+    // ← add this block
     if (window.Cursorly) {
       const cursor = window.Cursorly.init({
         cursor: 16,
@@ -17,6 +21,11 @@ function AppContent() {
       });
     }
   }, []);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
@@ -33,6 +42,15 @@ function AppContent() {
       <div id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route
+            path="/careers"
+            element={
+              <>
+                <Careers />
+                <Footer />
+              </>
+            }
+          />
         </Routes>
       </div>
     </>
