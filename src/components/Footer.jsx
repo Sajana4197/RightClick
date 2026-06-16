@@ -12,11 +12,10 @@ import { scrollToSection } from "../hooks/useLenis";
 
 const SERVICES = [
   "Managed IT Services",
-  "Cybersecurity",
-  "Cloud Solutions",
-  "Server Management",
   "Help Desk Support",
   "IT Consulting",
+  "Cyber Security",
+  "Cloud Services",
 ];
 
 const COMPANY = [
@@ -124,12 +123,29 @@ export default function Footer() {
                 <li key={s}>
                   <button
                     onClick={() => scrollToSection("services")}
-                    className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 text-left"
+                    className="
+        text-neutral-400
+        text-sm
+        hover:text-brand-blue
+        transition-colors
+        duration-200
+        text-left
+        "
                   >
                     {s}
                   </button>
                 </li>
               ))}
+
+              <li>
+                <button
+                  onClick={() => scrollToSection("services")}
+                  className="inline-flex items-center gap-2 text-brand-blue text-sm font-medium hover:translate-x-1 transition-all duration-300"
+                >
+                  See More
+                  <span>→</span>
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -189,19 +205,11 @@ export default function Footer() {
               <li className="flex items-start gap-2.5">
                 <FaEnvelope className="text-brand-blue text-xs mt-1 flex-shrink-0" />
                 <a
-                  href="mailto:info@rightclicks.com"
+                  href="mailto:info@rightclicks.lk"
                   className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 break-all"
                 >
-                  info@rightclicks.com
+                  info@RightClicks.lk
                 </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <FaMapMarkerAlt className="text-brand-blue text-xs mt-1 flex-shrink-0" />
-                <span className="text-neutral-400 text-sm leading-relaxed">
-                  24043 Katy Fwy, Suite 200,
-                  <br />
-                  Katy, TX 77494
-                </span>
               </li>
             </ul>
           </div>

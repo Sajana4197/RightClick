@@ -2,17 +2,16 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  FaUsers,
+  FaChartLine,
+  FaAward,
+  FaLaptopHouse,
   FaMapMarkerAlt,
-  FaBriefcase,
   FaClock,
   FaArrowRight,
-  FaTimes,
+  FaBriefcase,
   FaSearch,
-  FaHeart,
-  FaGraduationCap,
-  FaUsers,
-  FaLaptopHouse,
-  FaPiggyBank,
+  FaTimes,
 } from "react-icons/fa";
 import {
   fadeInUp,
@@ -127,40 +126,28 @@ const JOBS = [
 
 const BENEFITS = [
   {
-    icon: <FaHeart />,
-    title: "Health & Wellness",
-    desc: "Medical, dental, and vision coverage for you and your family.",
+    icon: <FaUsers />,
+    title: "Collaborative Culture",
+    desc: "Work with talented professionals in a supportive, inclusive environment.",
     image: "../../assets/images/medical.jpg",
   },
   {
-    icon: <FaPiggyBank />,
-    title: "401(k) Matching",
-    desc: "We match contributions to help you plan for the future.",
+    icon: <FaChartLine />,
+    title: "Career Growth",
+    desc: "Clear advancement paths and opportunities to take on new challenges.",
     image: "../../assets/images/401k.jpg",
   },
   {
-    icon: <FaLaptopHouse />,
-    title: "Flexible Work",
-    desc: "Remote, hybrid, and on-site roles depending on the team.",
+    icon: <FaAward />,
+    title: "Recognition",
+    desc: "Your contributions are valued and rewarded through various recognition programs.",
     image: "../../assets/images/flexible-work.jpg",
   },
   {
-    icon: <FaGraduationCap />,
-    title: "Growth & Training",
-    desc: "Certification reimbursement and dedicated learning time.",
+    icon: <FaLaptopHouse />,
+    title: "Remote Flexibility",
+    desc: "Work from anywhere with our flexible remote-first policies.",
     image: "../../assets/images/growth.jpg",
-  },
-  {
-    icon: <FaUsers />,
-    title: "Team Culture",
-    desc: "A supportive, collaborative team that has your back.",
-    image: "../../assets/images/team.jpg",
-  },
-  {
-    icon: <FaClock />,
-    title: "Paid Time Off",
-    desc: "Generous PTO, holidays, and a healthy work-life balance.",
-    image: "../../assets/images/pto.jpg",
   },
 ];
 
@@ -233,9 +220,9 @@ export default function Careers() {
               variants={fadeInUp}
               className="section-sub max-w-2xl mx-auto mb-10"
             >
-              We're a team of problem-solvers who take pride in keeping
-              businesses secure, productive, and ahead of the curve. Come help
-              us do it.
+              Build the future of IT services with us. We're looking for
+              passionate professionals who want to make a difference in how
+              businesses leverage technology.
             </motion.p>
             <motion.div variants={fadeInUp}>
               <button
@@ -742,12 +729,12 @@ function FannedBenefitCards() {
           width: 42px;
           height: 42px;
           border-radius: 10px;
-          background: rgba(30,144,255,0.15);
+          background: rgba(30,144,255,0.18);
           border: 1px solid rgba(30,144,255,0.3);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #1E90FF;
+          color: #005ce6;
           font-size: 18px;
           opacity: 0.6;
           transition: opacity 300ms ease-out;

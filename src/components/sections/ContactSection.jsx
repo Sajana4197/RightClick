@@ -1,57 +1,78 @@
 // src/components/sections/ContactSection.jsx
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa'
-import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer, viewportOnce } from '../../animations/variants'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaPaperPlane,
+} from "react-icons/fa";
+import {
+  fadeInUp,
+  fadeInLeft,
+  fadeInRight,
+  staggerContainer,
+  viewportOnce,
+} from "../../animations/variants";
 
 const CONTACT_INFO = [
   {
     icon: <FaPhone />,
-    label: 'Call Us',
-    value: '(281) 612-7292',
-    href: 'tel:+12816127292',
+    label: "Call Us",
+    value: "(281) 612-7292",
+    href: "tel:+12816127292",
   },
   {
     icon: <FaEnvelope />,
-    label: 'Email Us',
-    value: 'info@rightclicks.com',
-    href: 'mailto:info@rightclicks.com',
+    label: "Email Us",
+    value: "info@RightClicks.lk",
+    href: "mailto:info@rightclicks.lk",
   },
-  {
-    icon: <FaMapMarkerAlt />,
-    label: 'Office',
-    value: '24043 Katy Fwy, Suite 200, Katy, TX 77494',
-    href: 'https://maps.google.com/?q=24043+Katy+Fwy+Suite+200+Katy+TX+77494',
-  },
-]
+];
 
 export default function ContactSection() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', company: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
-  }
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
-    setForm({ name: '', email: '', phone: '', company: '', message: '' })
-  }
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
+    setForm({ name: "", email: "", phone: "", company: "", message: "" });
+  };
 
   return (
-    <section id="contact" className="section-py bg-dark-900 relative overflow-hidden">
+    <section
+      id="contact"
+      className="section-py bg-dark-900 relative overflow-hidden"
+    >
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-dots opacity-30" />
         <div
           className="absolute top-0 left-0 w-[55%] h-[60%] opacity-20"
-          style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(30,144,255,0.14) 0%, transparent 65%)' }}
+          style={{
+            background:
+              "radial-gradient(ellipse at 0% 0%, rgba(30,144,255,0.14) 0%, transparent 65%)",
+          }}
         />
         {/* City skyline silhouette */}
         <div className="absolute bottom-0 left-0 w-full h-32 sm:h-40 opacity-30 pointer-events-none">
-          <svg viewBox="0 0 1200 160" preserveAspectRatio="none" className="w-full h-full">
+          <svg
+            viewBox="0 0 1200 160"
+            preserveAspectRatio="none"
+            className="w-full h-full"
+          >
             <g fill="#1E90FF" fillOpacity="0.12">
               <rect x="0" y="60" width="60" height="100" />
               <rect x="70" y="30" width="50" height="130" />
@@ -81,7 +102,6 @@ export default function ContactSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-12 lg:gap-16">
-
           {/* Left — heading + info */}
           <motion.div
             variants={staggerContainer(0.1, 0.05)}
@@ -89,25 +109,38 @@ export default function ContactSection() {
             whileInView="visible"
             viewport={viewportOnce}
           >
-            <motion.p variants={fadeInUp} className="eyebrow mb-3">Contact Us</motion.p>
+            <motion.p variants={fadeInUp} className="eyebrow mb-3">
+              Contact Us
+            </motion.p>
             <motion.h2 variants={fadeInUp} className="section-heading mb-5">
               Let's Build a Stronger,
               <br />
-              More <span className="text-gradient-blue">Secure IT</span> Foundation
+              More <span className="text-gradient-blue">Secure IT</span>{" "}
+              Foundation
             </motion.h2>
-            <motion.p variants={fadeInUp} className="section-sub mb-10 max-w-md">
-              Have questions or ready to get started? We're here to help.
+            <motion.p
+              variants={fadeInUp}
+              className="section-sub mb-10 max-w-md"
+            >
+              Ready to discuss your IT needs? Contact our team of experts today.
+              We’re here to help you find the perfect technology solutions for
+              your business.
             </motion.p>
 
             {/* Contact info cards */}
-            <motion.div variants={staggerContainer(0.1, 0.1)} className="flex flex-col gap-5">
+            <motion.div
+              variants={staggerContainer(0.1, 0.1)}
+              className="flex flex-col gap-5"
+            >
               {CONTACT_INFO.map((item) => (
                 <motion.a
                   key={item.label}
                   variants={fadeInUp}
                   href={item.href}
-                  target={item.label === 'Office' ? '_blank' : undefined}
-                  rel={item.label === 'Office' ? 'noopener noreferrer' : undefined}
+                  target={item.label === "Office" ? "_blank" : undefined}
+                  rel={
+                    item.label === "Office" ? "noopener noreferrer" : undefined
+                  }
                   className="flex items-start gap-4 group"
                 >
                   <div className="w-11 h-11 rounded-lg bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-lg flex-shrink-0 group-hover:bg-brand-blue/20 group-hover:shadow-blue-glow-sm transition-all duration-300">
@@ -190,7 +223,7 @@ export default function ContactSection() {
                 whileTap={{ scale: 0.98 }}
                 className="btn-primary w-full justify-center mt-1 py-4 text-base"
               >
-                {submitted ? 'Message Sent!' : 'Send Message'}
+                {submitted ? "Message Sent!" : "Send Message"}
                 <FaPaperPlane className="text-sm" />
               </motion.button>
             </form>
@@ -198,5 +231,5 @@ export default function ContactSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

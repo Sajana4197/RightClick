@@ -2,20 +2,23 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
-  FaArrowRight,
   FaDesktop,
-  FaShieldAlt,
+  FaHeadset,
   FaCloud,
   FaServer,
-  FaHeadset,
-  FaChartLine,
+  FaUserTie,
+  FaShieldAlt,
+  FaGraduationCap,
+  FaNetworkWired,
+  FaDatabase,
+  FaRobot,
+  FaCogs,
+  FaLaptopCode,
+  FaArrowRight,
 } from "react-icons/fa";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  fadeInUp,
-  staggerContainer,
-} from "../../animations/variants";
+import { fadeInUp, staggerContainer } from "../../animations/variants";
 import { scrollToSection } from "../../hooks/useLenis";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,32 +27,63 @@ const SERVICES = [
   {
     icon: <FaDesktop />,
     title: "Managed IT Services",
-    desc: "Proactive monitoring, maintenance & support to keep you running.",
-  },
-  {
-    icon: <FaShieldAlt />,
-    title: "Cybersecurity",
-    desc: "Advanced protection to defend your systems and data 24/7.",
-  },
-  {
-    icon: <FaCloud />,
-    title: "Cloud Solutions",
-    desc: "Scalable cloud infrastructure built for performance.",
-  },
-  {
-    icon: <FaServer />,
-    title: "Server & Network Management",
-    desc: "Optimized, secure and reliable IT infrastructure.",
+    desc: "As a proud partner of FullyManagedIT.com, our Managed IT Services take the hassle out of technology management. From proactive maintenance to expert support, we ensure your IT infrastructure runs smoothly, allowing you to focus on growing your business without disruptions.",
   },
   {
     icon: <FaHeadset />,
-    title: "Help Desk Support",
-    desc: "Fast, friendly support whenever your team needs it.",
+    title: "Help Desk Support — 24/7 (Remote / On-Site)",
+    desc: "Our Help Desk Support provides quick, reliable assistance to keep your technology performing at its best, minimizing downtime and ensuring your business stays on track at all times..",
   },
   {
-    icon: <FaChartLine />,
-    title: "Strategic IT Consulting",
-    desc: "Technology roadmap aligned with your business goals.",
+    icon: <FaUserTie />,
+    title:
+      "IT Consulting — Tailored IT Consulting to Drive Your Business Forward",
+    desc: "We provide expert IT consulting and strategic guidance to help align your technology with your business objectives, ensuring maximum efficiency, innovation, and long-term growth.",
+  },
+  {
+    icon: <FaServer />,
+    title: "Server Management & Cloud Migrations",
+    desc: "Migrating to the cloud can be daunting, but with our expert assistance, we ensure a seamless transition of key processes, applications, or infrastructure. Unlock cloud technology’s full potential to boost efficiency and drive business growth.",
+  },
+  {
+    icon: <FaUserTie />,
+    title: "Virtual IT Manager",
+    desc: "Supercharge your business with our Virtual IT Manager service. Gain access to an experienced IT leader who streamlines your operations and handles all IT management tasks. Using ISO 20000 certification and the ITIL framework, we optimize your systems for security, cost-efficiency, and performance, so you can concentrate on scaling your business.",
+  },
+  {
+    icon: <FaShieldAlt />,
+    title: "Cyber Security Assessments",
+    desc: "Identify vulnerabilities before they’re exploited. Our comprehensive Cyber Security Assessments thoroughly evaluate your systems, pinpoint weaknesses, and simulate potential cyber attacks to strengthen your defenses and enhance your cyber resilience.",
+  },
+  {
+    icon: <FaGraduationCap />,
+    title: "Employee Training & Compliance",
+    desc: "Equip your team with the latest IT skills and ensure adherence to industry regulations through targeted training programs designed to empower your workforce and maintain compliance standards.",
+  },
+  {
+    icon: <FaNetworkWired />,
+    title: "Network Monitoring & Cyber Security",
+    desc: "Protect your business from evolving cyber threats with proactive monitoring and comprehensive security management. We continuously safeguard your network to ensure data integrity and business continuity.",
+  },
+  {
+    icon: <FaCloud />,
+    title: "Cloud Services & Data Management",
+    desc: "Leverage the power of cloud computing with seamless migration, management, and disaster recovery solutions. Unlock flexibility and scalability to accelerate your business success.",
+  },
+  {
+    icon: <FaRobot />,
+    title: "Business Analyst with AI",
+    desc: "Gain actionable insights and improve decision-making with AI-powered business analytics. Transform raw data into strategic intelligence to drive growth and efficiency.",
+  },
+  {
+    icon: <FaCogs />,
+    title: "Business Automation",
+    desc: "Streamline operations by automating repetitive tasks, reducing errors, and saving time. Increase productivity and focus on high-value business activities.",
+  },
+  {
+    icon: <FaLaptopCode />,
+    title: "Custom Web, Mobile Apps",
+    desc: "Build web and mobile applications tailored to meet your unique business needs and improve user experience with scalable, secure, and modern solutions.",
   },
 ];
 
@@ -264,14 +298,6 @@ function ServiceCard({ service, index }) {
       <p className="text-neutral-400 text-sm leading-relaxed mb-5">
         {service.desc}
       </p>
-
-      <button
-        onClick={() => {}}
-        className="group flex items-center gap-2 text-brand-blue text-sm font-semibold"
-      >
-        Learn More
-        <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform duration-200" />
-      </button>
 
       <div
         className="absolute bottom-0 left-0 h-[2px] w-full rounded-b-2xl"

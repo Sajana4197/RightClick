@@ -2,11 +2,12 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import {
-  FaShieldAlt,
-  FaUsers,
-  FaBolt,
   FaDollarSign,
-  FaChartLine,
+  FaUsers,
+  FaShieldAlt,
+  FaClock,
+  FaCheckSquare,
+  FaListAlt,
   FaArrowRight,
 } from "react-icons/fa";
 import {
@@ -18,34 +19,40 @@ import { scrollToSection } from "../../hooks/useLenis";
 
 const CARDS = [
   {
-    icon: <FaShieldAlt />,
-    title: "Proactive Approach",
-    desc: "We monitor and maintain your systems to prevent issues before they happen.",
+    icon: <FaDollarSign />,
+    title: "Reduce IT costs by up to 40%",
+    desc: "Stop overspending on reactive fixes, outdated systems, and unnecessary overhead. Our managed IT approach helps streamline operations, optimize infrastructure, and deliver predictable technology costs—so you can invest more in growing your business.",
     image: "../../assets/images/why-1.jpg",
   },
   {
-    icon: <FaUsers />,
-    title: "Expert Team",
-    desc: "Certified professionals with years of experience in solving complex IT challenges.",
+    icon: <FaClock />,
+    title: "Improve system uptime to 99.9%",
+    desc: "Downtime costs time, productivity, and revenue. Through proactive monitoring, preventative maintenance, and rapid response support, we keep your systems stable, available, and performing when your business needs them most.",
     image: "../../assets/images/why-2.jpg",
   },
   {
-    icon: <FaBolt />,
-    title: "Fast Response",
-    desc: "Quick response times and real solutions when you need them most.",
+    icon: <FaShieldAlt />,
+    title: "Enhanced security and compliance",
+    desc: "Stay protected against evolving cyber threats while meeting industry standards and compliance requirements. We implement layered security strategies, continuous monitoring, and best practices to safeguard your data and operations.",
     image: "../../assets/images/why-3.jpg",
   },
   {
-    icon: <FaDollarSign />,
-    title: "Transparent Pricing",
-    desc: "No hidden fees. Just honest pricing and predictable monthly costs.",
+    icon: <FaUsers />,
+    title: "24/7 expert support",
+    desc: "Technology issues don’t follow business hours—and neither do we. Our expert support team is available around the clock to resolve issues quickly, minimize disruption, and ensure your team stays productive.",
     image: "../../assets/images/why-4.jpg",
   },
   {
-    icon: <FaChartLine />,
-    title: "Your Success",
-    desc: "We align our IT solutions with your business goals to drive growth.",
+    icon: <FaCheckSquare />,
+    title: "Scalable solutions",
+    desc: "Your technology should support growth, not limit it. We design flexible and scalable IT environments that adapt to changing business demands, making expansion smoother and more efficient.",
     image: "../../assets/images/why-5.jpg",
+  },
+  {
+    icon: <FaListAlt />,
+    title: "Strategic technology planning",
+    desc: "Make smarter technology decisions with a long-term strategy. We work closely with your business to align IT investments with goals, improve efficiency, reduce risk, and create a roadmap for future growth.",
+    image: "../../assets/images/why-6.jpg",
   },
 ];
 
@@ -129,14 +136,14 @@ export default function WhyChooseUsSection() {
               gap: "12px",
               width: "100%",
               maxWidth: "1100px",
-              height: isMobile ? "480px" : "clamp(320px, 46vw, 460px)",
+              height: isMobile ? "auto" : "clamp(320px, 46vw, 460px)",
               listStyle: "none",
               margin: 0,
               padding: 0,
             }}
           >
             {CARDS.map((card, i) => {
-              const activeSize = 60; // % taken by the active panel
+              const activeSize = 60; // % taken by the active panel (desktop only)
               const remaining = 100 - activeSize;
               const inactiveSize = remaining / (CARDS.length - 1);
               const size = i === activeIndex ? activeSize : inactiveSize;
@@ -168,19 +175,23 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
       style={{
         position: "relative",
         overflow: "hidden",
-        flexGrow: size,
+        flexGrow: isMobile ? 0 : size,
         flexShrink: 0,
-        flexBasis: 0,
+        flexBasis: isMobile ? "auto" : 0,
         width: isMobile ? "auto" : 0,
-        height: isMobile ? 0 : "auto",
+        height: isMobile ? "auto" : "auto",
         minWidth: 0,
-        minHeight: isMobile ? "56px" : 0,
+        minHeight: isMobile ? "64px" : 0,
+        padding: isMobile ? "1rem 1.25rem" : 0,
+        display: isMobile ? "flex" : "block",
+        flexDirection: isMobile ? "column" : undefined,
+        justifyContent: isMobile && !active ? "center" : undefined,
         borderRadius: "16px",
         border: "1px solid rgba(36,48,80,0.7)",
         background: "#0E1628",
         cursor: "pointer",
         outline: "none",
-        transitionProperty: "flex-grow",
+        transitionProperty: isMobile ? "min-height" : "flex-grow",
         transitionDuration: `${SPEED}s`,
         transitionTimingFunction: EASING,
       }}
@@ -237,10 +248,10 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
       {/* Title — vertical when collapsed on desktop, always horizontal on mobile */}
       <h3
         style={{
-          position: "absolute",
-          top: "1.1rem",
-          left: "1.25rem",
-          right: isMobile ? "1.25rem" : "auto",
+          position: isMobile ? "relative" : "absolute",
+          top: isMobile ? "auto" : "1.1rem",
+          left: isMobile ? "auto" : "1.25rem",
+          right: "auto",
           transformOrigin: "0 50%",
           rotate: isMobile ? "0deg" : active ? "0deg" : "90deg",
           fontSize: active ? "20px" : isMobile ? "15px" : "14px",
@@ -255,7 +266,8 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
           transitionTimingFunction: EASING,
           whiteSpace: isMobile ? "normal" : "nowrap",
           margin: 0,
-          pointerEvents: "none",
+          marginBottom: isMobile && active ? "0.6rem" : 0,
+          pointerEvents: isMobile ? "auto" : "none",
           zIndex: 2,
           textShadow: "0 2px 8px rgba(0,0,0,0.6)",
         }}
@@ -269,7 +281,7 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
           display: isMobile ? "none" : "flex",
           position: "absolute",
           top: "1.25rem",
-          right: "1.25rem",
+          right: "0.75rem",
           width: "40px",
           height: "40px",
           borderRadius: "10px",
@@ -313,13 +325,14 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
       {/* Bottom content — description + CTA, fades in when active */}
       <div
         style={{
-          position: "absolute",
-          left: isMobile ? "1.25rem" : "1.5rem",
+          position: isMobile ? "relative" : "absolute",
+          left: isMobile ? "auto" : "1.5rem",
           right: isMobile ? "1.25rem" : "1.5rem",
-          bottom: "1.1rem",
-          display: "flex",
+          bottom: isMobile ? "auto" : "1.1rem",
+          display: isMobile && !active ? "none" : "flex",
           flexDirection: "column",
           gap: "0.6rem",
+          paddingBottom: isMobile ? "1rem" : 0,
           opacity: active ? 1 : 0,
           transitionProperty: "opacity",
           transitionDuration: `${SPEED * 1.2}s`,
@@ -333,7 +346,7 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
             fontSize: isMobile ? "14px" : "15px",
             lineHeight: 1.6,
             color: "#C8D4F0",
-            margin: 0,
+            margin: "0 1rem",
             textWrap: "balance",
             maxWidth: isMobile ? "100%" : "85%",
           }}
@@ -355,7 +368,7 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
             width: "fit-content",
             background: "none",
             border: "none",
-            padding: 0,
+            padding: "0 1rem",
             cursor: "pointer",
           }}
           className="hover:underline"

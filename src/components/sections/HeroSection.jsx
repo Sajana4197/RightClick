@@ -181,8 +181,11 @@ pt-0
               variants={fadeInUp}
               className="text-neutral-300 text-base lg:text-lg leading-relaxed max-w-[440px] mb-8"
             >
-              RightClicks delivers fully managed IT solutions that keep your
-              business secure, productive, and always ahead.
+              Optimizing your IT infrastructure is essential for business
+              success. Our team handles everything from setup to maintenance,
+              allowing you to focus on projects, operations, and customer
+              satisfaction. We’ll ensure that your tech environment runs
+              smoothly, with minimal disruptions to your day-to-day operations.
             </motion.p>
 
             <motion.div

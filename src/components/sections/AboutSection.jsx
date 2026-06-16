@@ -45,21 +45,18 @@ export default function AboutSection() {
               Work for <span className="text-gradient-blue">You</span>
             </motion.h2>
             <motion.p variants={fadeInUp} className="section-sub mb-4 max-w-md">
-              RightClicks is a leading managed IT service provider helping
-              businesses stay secure, productive, and prepared for the future.
+              We've been helping businesses leverage technology to grow,
+              innovate, and stay competitive in an ever-evolving digital
+              landscape.
             </motion.p>
             <motion.p variants={fadeInUp} className="section-sub mb-8 max-w-md">
-              We combine proactive monitoring, advanced security, and expert
-              support to deliver IT solutions that drive growth and efficiency.
+              At RightClicks, we are a rapidly growing IT support and service
+              company dedicated to delivering fully managed IT solutions
+              tailored to meet the unique needs of your business. With a strong
+              presence in Sri Lanka, Maldives, and Canada, we proudly offer
+              worldwide support and services that keep your technology running
+              smoothly and securely, no matter where you are.
             </motion.p>
-            <motion.div variants={fadeInUp}>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="btn-ghost"
-              >
-                Learn More About Us <FaArrowRight className="text-xs" />
-              </button>
-            </motion.div>
           </motion.div>
 
           {/* Right — image composition */}
