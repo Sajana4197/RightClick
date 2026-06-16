@@ -50,9 +50,9 @@ export default function Home() {
       <Suspense fallback={<SectionFallback />}>
         <ServicesSection />
       </Suspense>
-      <Suspense fallback={<SectionFallback />}>
+      {/* <Suspense fallback={<SectionFallback />}>
         <ReviewsSection />
-      </Suspense>
+      </Suspense> */}
       <Suspense fallback={<SectionFallback />}>
         <ContactSection />
       </Suspense>

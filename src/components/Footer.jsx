@@ -20,15 +20,15 @@ const SERVICES = [
 
 const COMPANY = [
   { label: "About Us", id: "about" },
-  { label: "Careers", id: "careers" },
   { label: "Why RightClicks", id: "why" },
-  { label: "News & Insights", id: "reviews" },
+  { label: "Careers", id: "careers" },
+  // { label: "News & Insights", id: "reviews" },
 ];
 
 const SUPPORT = [
   { label: "Contact Us", id: "contact" },
   { label: "FAQ", id: "contact" },
-  { label: "Case Studies", id: "reviews" },
+  // { label: "Case Studies", id: "reviews" },
   { label: "Resources", id: "services" },
 ];
 
