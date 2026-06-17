@@ -393,10 +393,10 @@ export default function Careers() {
                   <p className="text-neutral-500 text-xs">
                     Don't see the right fit? Send your resume to{" "}
                     <a
-                      href="mailto:careers@rightclicks.com"
+                      href="mailto:info@rightclicks.com"
                       className="text-brand-blue hover:underline"
                     >
-                      careers@rightclicks.com
+                      info@rightclicks.com
                     </a>
                   </p>
                 </motion.div>
@@ -443,7 +443,7 @@ export default function Careers() {
               tell us how you'd like to contribute.
             </motion.p>
             <motion.div variants={fadeInUp}>
-              <a href="mailto:careers@rightclicks.com" className="btn-primary">
+              <a href="mailto:info@rightclicks.com" className="btn-primary">
                 Email Your Resume <FaArrowRight className="text-xs" />
               </a>
             </motion.div>
@@ -530,7 +530,7 @@ function JobModal({ job, onClose }) {
         </ul>
 
         <a
-          href={`mailto:careers@rightclicks.com?subject=Application: ${encodeURIComponent(job.title)}`}
+          href={`mailto:info@rightclicks.com?subject=Application: ${encodeURIComponent(job.title)}`}
           className="btn-primary w-full justify-center"
         >
           Apply for This Role <FaArrowRight className="text-xs" />

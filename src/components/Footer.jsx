@@ -4,11 +4,29 @@ import {
   FaLinkedinIn,
   FaInstagram,
   FaYoutube,
-  FaPhone,
+  FaWhatsapp,
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { scrollToSection } from "../hooks/useLenis";
+
+// Two regional WhatsApp numbers — keep in sync with ContactSection.jsx
+const REGIONS = [
+  {
+    id: 'lk',
+    label: 'Sri Lanka',
+    phoneDisplay: '+94 77 297 5000',
+    whatsapp: '94772975000',
+    defaultMessage: "Hi RightClicks, I'd like to know more about your IT services.",
+  },
+  {
+    id: 'ca',
+    label: 'Canada',
+    phoneDisplay: '+1 (250) 885-5678',
+    whatsapp: '12508855678',
+    defaultMessage: "Hi RightClicks, I'd like to know more about your IT services.",
+  },
+]
 
 const SERVICES = [
   "Managed IT Services",
@@ -84,13 +102,12 @@ export default function Footer() {
               onClick={() => scrollToSection("home")}
               className="flex items-center gap-2.5 mb-4"
             >
-              <div className="w-8 h-8 rounded-md bg-brand-blue flex items-center justify-center shadow-blue-glow-sm">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path
-                    d="M2 2h6v6H2zM10 2h6v4h-6zM10 8h6v8h-6zM2 10h6v6H2z"
-                    fill="white"
-                  />
-                </svg>
+              <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-md">
+                <img
+                  src="/Logo.png"
+                  alt="RightClicks logo"
+                  className="w-12 h-12 object-contain"
+                />
               </div>
               <span className="text-lg font-bold text-white tracking-tight">
                 Right<span className="text-brand-blue">Clicks</span>
@@ -193,15 +210,20 @@ export default function Footer() {
               Contact Us
             </h4>
             <ul className="flex flex-col gap-3">
-              <li className="flex items-start gap-2.5">
-                <FaPhone className="text-brand-blue text-xs mt-1 flex-shrink-0" />
-                <a
-                  href="tel:+12816127292"
-                  className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200"
-                >
-                  (281) 612-7292
-                </a>
-              </li>
+              {REGIONS.map((r) => (
+                <li key={r.id} className="flex items-start gap-2.5">
+                  <FaWhatsapp className="text-brand-blue text-xs mt-1 flex-shrink-0" />
+                  <a
+                    href={`https://wa.me/${r.whatsapp}?text=${encodeURIComponent(r.defaultMessage)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200"
+                  >
+                    <span className="text-neutral-500 text-xs mr-1.5">{r.label}:</span>
+                    {r.phoneDisplay}
+                  </a>
+                </li>
+              ))}
               <li className="flex items-start gap-2.5">
                 <FaEnvelope className="text-brand-blue text-xs mt-1 flex-shrink-0" />
                 <a

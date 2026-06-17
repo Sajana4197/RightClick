@@ -1,11 +1,35 @@
 // src/components/Navbar.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FaPhone } from "react-icons/fa";
+import { FaWhatsapp, FaChevronDown } from "react-icons/fa";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useScrolled } from "../hooks/useScrolled";
 import { scrollToSection } from "../hooks/useLenis";
+
+// Two regional WhatsApp numbers — keep in sync with ContactSection.jsx / Footer.jsx
+const REGIONS = [
+  {
+    id: "lk",
+    label: "Sri Lanka",
+    phoneDisplay: "+94 77 297 5000",
+    whatsapp: "94772975000",
+    defaultMessage:
+      "Hi RightClicks, I'd like to know more about your IT services.",
+  },
+  {
+    id: "ca",
+    label: "Canada",
+    phoneDisplay: "+1 (250) 885-5678",
+    whatsapp: "12508855678",
+    defaultMessage:
+      "Hi RightClicks, I'd like to know more about your IT services.",
+  },
+];
+
+function whatsappHref(region) {
+  return `https://wa.me/${region.whatsapp}?text=${encodeURIComponent(region.defaultMessage)}`;
+}
 
 const NAV_LINKS = [
   { label: "Home", id: "home" },
@@ -30,9 +54,23 @@ const SECTION_IDS = [
 export default function Navbar() {
   const scrolled = useScrolled(20);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [callMenuOpen, setCallMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const navigate = useNavigate();
   const location = useLocation();
+  const callMenuRef = useRef(null);
+
+  // Close the call dropdown when clicking outside it
+  useEffect(() => {
+    if (!callMenuOpen) return;
+    const handleClick = (e) => {
+      if (callMenuRef.current && !callMenuRef.current.contains(e.target)) {
+        setCallMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [callMenuOpen]);
 
   // Scroll-spy — highlight the nav link for the section currently in view
   useEffect(() => {
@@ -136,13 +174,12 @@ export default function Navbar() {
             onClick={() => handleNav({ id: "home" })}
             className="flex items-center gap-2.5 focus:outline-none group"
           >
-            <div className="w-8 h-8 rounded-md bg-brand-blue flex items-center justify-center shadow-blue-glow-sm group-hover:shadow-blue-glow transition-all duration-300">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path
-                  d="M2 2h6v6H2zM10 2h6v4h-6zM10 8h6v8h-6zM2 10h6v6H2z"
-                  fill="white"
-                />
-              </svg>
+            <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-md">
+              <img
+                src="/Logo.png"
+                alt="RightClicks logo"
+                className="w-12 h-12 object-contain"
+              />
             </div>
             <span className="text-lg font-bold text-white tracking-tight">
               Right<span className="text-brand-blue">Clicks</span>
@@ -191,20 +228,61 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* CTA button */}
-          <div className="hidden lg:flex items-center">
-            <a
-              href="tel:+12816127292"
+          {/* CTA button — WhatsApp region picker */}
+          <div
+            className="hidden lg:flex items-center relative"
+            ref={callMenuRef}
+          >
+            <button
+              onClick={() => setCallMenuOpen((v) => !v)}
               className="flex items-center gap-2 bg-brand-blue hover:bg-brand-blue-light text-white text-sm font-semibold px-4 py-2.5 rounded-md transition-all duration-300 shadow-blue-glow-sm hover:shadow-blue-glow"
             >
-              <FaPhone className="text-xs" />
+              <FaWhatsapp className="text-sm" />
               <div className="flex flex-col leading-none">
                 <span className="text-[9px] font-normal opacity-80">
                   Call Us
                 </span>
-                <span className="text-xs font-bold">(281) 612-7292</span>
+                <span className="text-xs font-bold">WhatsApp</span>
               </div>
-            </a>
+              <FaChevronDown
+                className={`text-[10px] ml-1 transition-transform duration-200 ${callMenuOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {callMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                  transition={{ duration: 0.18 }}
+                  className="absolute top-full right-0 mt-2 w-60 bg-dark-700 border border-dark-400/60 rounded-lg shadow-card overflow-hidden"
+                >
+                  {REGIONS.map((r) => (
+                    <a
+                      key={r.id}
+                      href={whatsappHref(r)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setCallMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 hover:bg-dark-600 transition-colors duration-150"
+                    >
+                      <div className="w-8 h-8 rounded-md bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-sm flex-shrink-0">
+                        <FaWhatsapp />
+                      </div>
+                      <div>
+                        <p className="text-white text-sm font-semibold leading-tight">
+                          {r.label}
+                        </p>
+                        <p className="text-neutral-400 text-xs leading-tight mt-0.5">
+                          {r.phoneDisplay}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Mobile hamburger */}
@@ -248,13 +326,22 @@ export default function Navbar() {
                   </button>
                 );
               })}
-              <a
-                href="tel:+12816127292"
-                className="flex items-center gap-2 mt-2 px-4 py-3 bg-brand-blue rounded-lg text-white text-sm font-semibold"
-              >
-                <FaPhone className="text-xs" />
-                <span>(281) 612-7292</span>
-              </a>
+              <div className="flex flex-col gap-2 mt-2">
+                {REGIONS.map((r) => (
+                  <a
+                    key={r.id}
+                    href={whatsappHref(r)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-3 bg-brand-blue rounded-lg text-white text-sm font-semibold"
+                  >
+                    <FaWhatsapp className="text-xs" />
+                    <span>
+                      {r.label}: {r.phoneDisplay}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </nav>
           </motion.div>
         )}

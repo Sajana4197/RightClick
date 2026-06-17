@@ -1,5 +1,6 @@
 // src/components/sections/AboutSection.jsx
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { FaArrowRight, FaUsers } from "react-icons/fa";
 import {
   fadeInUp,
@@ -90,19 +91,7 @@ export default function AboutSection() {
               />
 
               {/* RightClicks branding overlay */}
-              <div className="absolute top-4 right-4 flex items-center gap-2 bg-dark-800/80 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-dark-400/50">
-                <div className="w-5 h-5 rounded bg-brand-blue flex items-center justify-center">
-                  <svg width="10" height="10" viewBox="0 0 18 18" fill="none">
-                    <path
-                      d="M2 2h6v6H2zM10 2h6v4h-6zM10 8h6v8h-6zM2 10h6v6H2z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <span className="text-white text-xs font-bold">
-                  RightClicks
-                </span>
-              </div>
+              <Logo3DBadge />
 
               {/* Years badge */}
               <motion.div
@@ -128,7 +117,7 @@ export default function AboutSection() {
             </div>
 
             {/* 500+ businesses card — bottom right, overlapping */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20, x: 20 }}
               whileInView={{ opacity: 1, y: 0, x: 0 }}
               viewport={viewportOnce}
@@ -153,10 +142,79 @@ export default function AboutSection() {
                   Supported
                 </p>
               </div>
-            </motion.div>
+            </motion.div> */}
           </motion.div>
         </div>
       </div>
     </section>
+  );
+}
+
+function Logo3DBadge() {
+  const cardRef = useRef(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springX = useSpring(mouseX, { stiffness: 300, damping: 22 });
+  const springY = useSpring(mouseY, { stiffness: 300, damping: 22 });
+
+  const rotateX = useTransform(springY, [-0.5, 0.5], [16, -16]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-16, 16]);
+
+  const sheenAngle = useTransform(springX, [-0.5, 0.5], [105, 145]);
+  const sheenOpacity = useTransform([springX, springY], ([x, y]) =>
+    Math.min(1, Math.hypot(x, y) * 2.2),
+  );
+
+  const handleMouseMove = (e) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  return (
+    <div
+      className="absolute top-4 right-4"
+      style={{ perspective: "500px" }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <motion.div
+        ref={cardRef}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="relative flex items-center justify-center bg-dark-800/85 backdrop-blur-sm p-2 rounded-lg border border-brand-blue/30 overflow-hidden"
+      >
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            opacity: sheenOpacity,
+            background: useTransform(
+              sheenAngle,
+              (angle) =>
+                `linear-gradient(${angle}deg, rgba(255,255,255,0.25) 0%, transparent 55%)`,
+            ),
+          }}
+        />
+
+        <div
+          className="relative w-14 h-14 flex items-center justify-center overflow-hidden rounded-md"
+          style={{ transform: "translateZ(10px)" }}
+        >
+          <img
+            src="/Logo.png"
+            alt="RightClicks logo"
+            className="w-14 h-14 object-contain"
+            style={{ filter: "drop-shadow(0 2px 6px rgba(30,144,255,0.5))" }}
+          />
+        </div>
+      </motion.div>
+    </div>
   );
 }

@@ -1,11 +1,13 @@
 // src/components/sections/ContactSection.jsx
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaPhone,
   FaEnvelope,
   FaMapMarkerAlt,
   FaPaperPlane,
+  FaWhatsapp,
+  FaTimes,
 } from "react-icons/fa";
 import {
   fadeInUp,
@@ -15,13 +17,29 @@ import {
   viewportOnce,
 } from "../../animations/variants";
 
-const CONTACT_INFO = [
+// Two regional numbers — used for both "Call Us" display and WhatsApp routing
+const REGIONS = [
   {
-    icon: <FaPhone />,
-    label: "Call Us",
-    value: "(281) 612-7292",
-    href: "tel:+12816127292",
+    id: "lk",
+    label: "Sri Lanka",
+    phoneDisplay: "+94 77 297 5000",
+    phoneTel: "+94772975000",
+    whatsapp: "94772975000",
+    defaultMessage:
+      "Hi RightClicks, I'd like to know more about your IT services.",
   },
+  {
+    id: "ca",
+    label: "Canada",
+    phoneDisplay: "+1 (250) 885-5678",
+    phoneTel: "+12508855678",
+    whatsapp: "12508855678",
+    defaultMessage:
+      "Hi RightClicks, I'd like to know more about your IT services.",
+  },
+];
+
+const CONTACT_INFO_STATIC = [
   {
     icon: <FaEnvelope />,
     label: "Email Us",
@@ -38,6 +56,7 @@ export default function ContactSection() {
     company: "",
     message: "",
   });
+  const [showRegionPicker, setShowRegionPicker] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -46,6 +65,31 @@ export default function ContactSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Basic native validation already runs via required attrs on inputs.
+    // Show the region picker so the visitor chooses where to send the message.
+    setShowRegionPicker(true);
+  };
+
+  const sendToRegion = (regionId) => {
+    const selectedRegion = REGIONS.find((r) => r.id === regionId) || REGIONS[0];
+
+    const lines = [
+      `New website inquiry`,
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      form.phone ? `Phone: ${form.phone}` : null,
+      form.company ? `Company: ${form.company}` : null,
+      ``,
+      `Message:`,
+      form.message,
+    ].filter(Boolean);
+
+    const text = encodeURIComponent(lines.join("\n"));
+    const whatsappUrl = `https://wa.me/${selectedRegion.whatsapp}?text=${text}`;
+
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+    setShowRegionPicker(false);
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
     setForm({ name: "", email: "", phone: "", company: "", message: "" });
@@ -132,15 +176,41 @@ export default function ContactSection() {
               variants={staggerContainer(0.1, 0.1)}
               className="flex flex-col gap-5"
             >
-              {CONTACT_INFO.map((item) => (
+              {/* Call Us — both regional numbers */}
+              <motion.div
+                variants={fadeInUp}
+                className="flex items-start gap-4 group"
+              >
+                <div className="w-11 h-11 rounded-lg bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-lg flex-shrink-0">
+                  <FaPhone />
+                </div>
+                <div className="pt-1">
+                  <p className="text-brand-blue text-xs font-semibold uppercase tracking-wider mb-1">
+                    Call Us
+                  </p>
+                  {REGIONS.map((r) => (
+                    <a
+                      key={r.id}
+                      href={`https://wa.me/${r.whatsapp}?text=${encodeURIComponent(r.defaultMessage)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-white text-sm sm:text-base font-medium leading-snug hover:text-brand-blue-light transition-colors duration-200"
+                    >
+                      <span className="text-neutral-500 text-xs font-normal w-16 flex-shrink-0">
+                        {r.label}
+                      </span>
+                      {r.phoneDisplay}
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Email + any other static items */}
+              {CONTACT_INFO_STATIC.map((item) => (
                 <motion.a
                   key={item.label}
                   variants={fadeInUp}
                   href={item.href}
-                  target={item.label === "Office" ? "_blank" : undefined}
-                  rel={
-                    item.label === "Office" ? "noopener noreferrer" : undefined
-                  }
                   className="flex items-start gap-4 group"
                 >
                   <div className="w-11 h-11 rounded-lg bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-lg flex-shrink-0 group-hover:bg-brand-blue/20 group-hover:shadow-blue-glow-sm transition-all duration-300">
@@ -223,13 +293,86 @@ export default function ContactSection() {
                 whileTap={{ scale: 0.98 }}
                 className="btn-primary w-full justify-center mt-1 py-4 text-base"
               >
-                {submitted ? "Message Sent!" : "Send Message"}
-                <FaPaperPlane className="text-sm" />
+                Send via WhatsApp
+                <FaWhatsapp className="text-base" />
               </motion.button>
+
+              <AnimatePresence>
+                {submitted && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-center text-sm text-brand-blue-light"
+                  >
+                    WhatsApp opened — just hit send there to reach our team.
+                  </motion.p>
+                )}
+              </AnimatePresence>
             </form>
           </motion.div>
         </div>
       </div>
+
+      {/* Region picker modal — appears after Send is clicked */}
+      <AnimatePresence>
+        {showRegionPicker && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+            style={{ background: "rgba(5,10,20,0.75)" }}
+            onClick={() => setShowRegionPicker(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass-card w-full max-w-sm p-6 sm:p-7 relative"
+            >
+              <button
+                onClick={() => setShowRegionPicker(false)}
+                aria-label="Close"
+                className="absolute top-4 right-4 w-8 h-8 rounded-lg border border-dark-400/60 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-blue/50 transition-all duration-200"
+              >
+                <FaTimes className="text-sm" />
+              </button>
+
+              <h3 className="text-white font-bold text-lg mb-1.5">
+                Choose a region
+              </h3>
+              <p className="text-neutral-400 text-sm mb-6">
+                We'll open WhatsApp with your message ready to send.
+              </p>
+
+              <div className="flex flex-col gap-3">
+                {REGIONS.map((r) => (
+                  <button
+                    key={r.id}
+                    onClick={() => sendToRegion(r.id)}
+                    className="flex items-center gap-3 w-full bg-dark-600 border border-dark-400/60 rounded-lg px-4 py-3.5 text-left hover:border-brand-blue/50 hover:bg-dark-500 transition-all duration-200 group"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-lg flex-shrink-0 group-hover:bg-brand-blue/20 transition-all duration-200">
+                      <FaWhatsapp />
+                    </div>
+                    <div>
+                      <p className="text-white text-sm font-semibold">
+                        {r.label}
+                      </p>
+                      <p className="text-neutral-400 text-xs">
+                        {r.phoneDisplay}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
