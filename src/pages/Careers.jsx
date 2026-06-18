@@ -39,87 +39,129 @@ const JOBS = [
     location: "Katy, TX",
     type: "Full-time",
     remote: "Hybrid",
-    desc: "Design, implement, and maintain client network infrastructure including routing, switching, firewalls, and VPNs.",
+    desc: "We are looking for a Senior Software Engineer to lead the design, development, and optimization of high-quality software solutions. You will collaborate with cross-functional teams and mentor junior engineers.",
+    responsibilities: [
+      "Design and implement scalable, secure, and high-performance applications.",
+      "Lead code reviews, provide technical guidance, and enforce best practices.",
+      "Work closely with product managers and stakeholders to define requirements.",
+      "Troubleshoot, debug, and optimize existing systems.",
+      "Mentor and guide junior developers.",
+    ],
     requirements: [
-      "5+ years in network engineering or related field",
-      "CCNA/CCNP certification preferred",
-      "Experience with Cisco, Fortinet, or Meraki hardware",
-      "Strong troubleshooting and documentation skills",
+      "Bachelor’s or Master’s degree in Computer Science, Engineering, or related field.",
+      "5+ years of professional software development experience.",
+      "Proven experience leading engineering teams or projects.",
+      "Strong in Java, C#, Python, or similar.",
+      "Hands-on experience with cloud platforms (AWS, Azure, GCP).",
+      "Proficiency in databases (SQL/NoSQL), microservices, and APIs.",
+      "Experience with CI/CD and DevOps practices.",
+      "Strong problem-solving and analytical skills.",
+      "Excellent communication and leadership abilities.",
+      "Team-oriented mindset with mentoring experience.",
     ],
   },
   {
     id: 2,
-    title: "Help Desk Technician (Tier 1)",
-    department: "Support",
+    title: "Junior Developer",
+    department: "Engineering",
     location: "Katy, TX",
     type: "Full-time",
     remote: "On-site",
-    desc: "Be the first point of contact for client IT issues — triaging tickets, resolving common problems, and escalating when needed.",
+    desc: "We are seeking a Junior Developer to assist in building and maintaining applications while learning and growing under senior guidance.",
+    responsibilities: [
+      "Write clean and maintainable code with supervision.",
+      "Assist in debugging, testing, and documenting software.",
+      "Collaborate with senior developers on project tasks.",
+      "Learn new technologies and frameworks as required.",
+    ],
     requirements: [
-      "1+ years in a help desk or IT support role",
-      "Familiarity with Windows, macOS, and Microsoft 365",
-      "Excellent communication and customer service skills",
-      "CompTIA A+ a plus",
+      "Bachelor’s degree in Computer Science or related field (or equivalent training).",
+      "Internship or 0–2 years of experience in software development.",
+      "Basic knowledge of at least one programming language (Java, Python, C#, or JavaScript).",
+      "Familiarity with databases and version control (Git).",
+      "Understanding of software development lifecycle.",
+      "Willingness to learn and adapt quickly.",
+      "Srong attention to detail.",
+      "Good teamwork and communication skills.",
     ],
   },
   {
     id: 3,
-    title: "Cybersecurity Analyst",
-    department: "Security",
-    location: "Remote (US)",
-    type: "Full-time",
-    remote: "Remote",
-    desc: "Monitor client environments for threats, respond to incidents, and help harden security postures across our managed clients.",
-    requirements: [
-      "3+ years in a SOC or security analyst role",
-      "Experience with SIEM tools and EDR platforms",
-      "Security+ or equivalent certification",
-      "Knowledge of compliance frameworks (HIPAA, PCI-DSS) a plus",
-    ],
-  },
-  {
-    id: 4,
-    title: "Account Executive — IT Services",
-    department: "Sales",
-    location: "Katy, TX",
-    type: "Full-time",
-    remote: "Hybrid",
-    desc: "Build relationships with local businesses, identify their IT pain points, and present RightClicks managed service solutions.",
-    requirements: [
-      "2+ years of B2B sales experience",
-      "Understanding of managed IT services a plus",
-      "Strong presentation and negotiation skills",
-      "Self-motivated with a track record of hitting quota",
-    ],
-  },
-  {
-    id: 5,
-    title: "Cloud Solutions Architect",
+    title: "Senior UI/UX Engineer",
     department: "Engineering",
     location: "Remote (US)",
     type: "Full-time",
     remote: "Remote",
-    desc: "Design and oversee migrations to Azure and AWS for clients, optimizing cost, performance, and security.",
+    desc: "We are looking for a Senior UI/UX Engineer to design and implement user-friendly, visually appealing, and intuitive digital experiences.",
+    responsibilities: [
+      "Conduct user research, usability testing, and user journey mapping.",
+      "Translate concepts into wireframes, mockups, and prototypes.",
+      "Collaborate with developers to implement designs.",
+      "Ensure design consistency across web and mobile platforms.",
+      "Stay updated on UI/UX trends and tools.",
+    ],
     requirements: [
-      "4+ years designing cloud infrastructure",
-      "Azure or AWS certification required",
-      "Experience with IaC (Terraform, ARM, CloudFormation)",
-      "Client-facing communication experience",
+      "Bachelor’s degree in Design, HCI, Computer Science, or related field.",
+      "4+ years of experience in UI/UX design.",
+      "Strong portfolio showcasing user-centered design projects.",
+      "Expertise in design tools (Figma, Sketch, Adobe XD).",
+      "Proficiency in HTML, CSS, and basic JavaScript.",
+      "Understanding of accessibility standards.",
+      "Strong creativity and problem-solving ability.",
+      "Excellent communication and presentation skills.",
+      "Attention to detail and user empathy.",
     ],
   },
   {
-    id: 6,
-    title: "IT Operations Coordinator",
-    department: "Operations",
+    id: 4,
+    title: "Full Stack Web Developer",
+    department: "Engineering",
     location: "Katy, TX",
-    type: "Part-time",
-    remote: "On-site",
-    desc: "Support the operations team with scheduling, vendor coordination, inventory tracking, and ticket workflow management.",
+    type: "Full-time",
+    remote: "Hybrid",
+    desc: "We are hiring a Full Stack Developer to build and maintain robust web applications across front-end and back-end.",
+    responsibilities: [
+      "Develop and maintain both server-side and client-side applications.",
+      "Design and manage APIs and databases.",
+      "Collaborate with designers to ensure seamless user experience.",
+      "Optimize applications for performance and scalability.",
+    ],
     requirements: [
-      "1+ years in an operations or admin support role",
-      "Highly organized with strong attention to detail",
-      "Comfortable with ticketing systems (ConnectWise, Autotask, etc.)",
-      "Proficiency with Microsoft Office / Google Workspace",
+      "Bachelor’s degree in Computer Science, Software Engineering, or related field.",
+      "3+ years of experience in full stack web development.",
+      "Proficiency in front-end frameworks (React, Angular, or Vue).",
+      "Strong back-end skills (Node.js, Django, Spring Boot, or .NET).",
+      "Database experience (MySQL, PostgreSQL, MongoDB).",
+      "Familiarity with Git, CI/CD, and REST APIs.",
+      "Strong problem-solving mindset.",
+      "Ability to work in cross-functional teams.",
+      "Good communication and organizational skills.",
+    ],
+  },
+  {
+    id: 5,
+    title: "Mobile Application Developer",
+    department: "Engineering",
+    location: "Remote (US)",
+    type: "Full-time",
+    remote: "Remote",
+    desc: "We are seeking a Mobile Application Developer to create high-quality iOS and Android applications with smooth performance and great user experience.",
+    responsibilities: [
+      "Design, build, and maintain mobile apps.",
+      "Collaborate with UI/UX designers and backend teams.",
+      "Integrate APIs and third-party services.",
+      "Ensure app performance, security, and compatibility across devices.",
+    ],
+    requirements: [
+      "Bachelor’s degree in Computer Science, Software Engineering, or related field.",
+      "2+ years of experience in mobile app development",
+      "Strong knowledge of Kotlin/Java (Android) or Swift (iOS).",
+      "Experience with cross-platform frameworks (Flutter, React Native) is a plus.",
+      "Understanding of app store deployment processes.",
+      "Familiarity with mobile app security best practices.",
+      "Creative mindset with attention to detail.",
+      "Strong debugging and problem-solving skills.",
+      "Ability to work independently and in a team.",
     ],
   },
 ];
@@ -463,6 +505,16 @@ export default function Careers() {
 
 // ── Job detail modal ─────────────────────────────────────────────────────
 function JobModal({ job, onClose }) {
+  useEffect(() => {
+    const original = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -478,7 +530,8 @@ function JobModal({ job, onClose }) {
         exit={{ opacity: 0, y: 20, scale: 0.97 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="glass-card w-full max-w-2xl max-h-[85vh] overflow-y-auto p-6 sm:p-8 relative"
+        onWheel={(e) => e.stopPropagation()}
+        className="glass-card w-full max-w-2xl max-h-[85vh] overflow-y-auto overscroll-contain touch-pan-y p-6 sm:p-8 relative"
       >
         <button
           onClick={onClose}
@@ -501,7 +554,7 @@ function JobModal({ job, onClose }) {
           {job.title}
         </h2>
 
-        <div className="flex items-center gap-5 text-neutral-400 text-sm mb-6">
+        <div className="flex items-center gap-5 text-neutral-400 text-sm mb-5">
           <span className="flex items-center gap-1.5">
             <FaMapMarkerAlt className="text-brand-blue/70" /> {job.location}
           </span>
@@ -510,9 +563,42 @@ function JobModal({ job, onClose }) {
           </span>
         </div>
 
-        <p className="text-neutral-300 text-sm leading-relaxed mb-6">
+        <p className="text-neutral-300 text-sm leading-relaxed mb-5">
           {job.desc}
         </p>
+        <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wider">
+          Responsibilities
+        </h3>
+
+        <ul className="flex flex-col gap-2.5 mb-8">
+          {job.responsibilities?.map((item) => (
+            <li
+              key={item}
+              className="
+      flex
+      items-start
+      gap-2.5
+      text-neutral-400
+      text-sm
+      leading-relaxed
+      "
+            >
+              <span
+                className="
+        text-brand-blue
+        mt-1.5
+        w-1.5
+        h-1.5
+        rounded-full
+        bg-brand-blue
+        flex-shrink-0
+        "
+              />
+
+              {item}
+            </li>
+          ))}
+        </ul>
 
         <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wider">
           What You'll Bring

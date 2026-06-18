@@ -9,24 +9,27 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { scrollToSection } from "../hooks/useLenis";
+import { useNavigate } from "react-router-dom";
 
 // Two regional WhatsApp numbers — keep in sync with ContactSection.jsx
 const REGIONS = [
   {
-    id: 'lk',
-    label: 'Sri Lanka',
-    phoneDisplay: '+94 77 297 5000',
-    whatsapp: '94772975000',
-    defaultMessage: "Hi RightClicks, I'd like to know more about your IT services.",
+    id: "lk",
+    label: "Sri Lanka",
+    phoneDisplay: "+94 77 297 5000",
+    whatsapp: "94772975000",
+    defaultMessage:
+      "Hi RightClicks, I'd like to know more about your IT services.",
   },
   {
-    id: 'ca',
-    label: 'Canada',
-    phoneDisplay: '+1 (250) 885-5678',
-    whatsapp: '12508855678',
-    defaultMessage: "Hi RightClicks, I'd like to know more about your IT services.",
+    id: "ca",
+    label: "Canada",
+    phoneDisplay: "+1 (250) 885-5678",
+    whatsapp: "12508855678",
+    defaultMessage:
+      "Hi RightClicks, I'd like to know more about your IT services.",
   },
-]
+];
 
 const SERVICES = [
   "Managed IT Services",
@@ -39,7 +42,7 @@ const SERVICES = [
 const COMPANY = [
   { label: "About Us", id: "about" },
   { label: "Why RightClicks", id: "why" },
-  { label: "Careers", id: "careers" },
+  { label: "Careers", path: "/careers" },
   // { label: "News & Insights", id: "reviews" },
 ];
 
@@ -58,6 +61,7 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const navigate = useNavigate();
   const year = new Date().getFullYear();
 
   return (
@@ -175,7 +179,13 @@ export default function Footer() {
               {COMPANY.map((c) => (
                 <li key={c.label}>
                   <button
-                    onClick={() => scrollToSection(c.id)}
+                    onClick={() => {
+                      if (c.path) {
+                        navigate(c.path);
+                      } else {
+                        scrollToSection(c.id);
+                      }
+                    }}
                     className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 text-left"
                   >
                     {c.label}
@@ -219,7 +229,9 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200"
                   >
-                    <span className="text-neutral-500 text-xs mr-1.5">{r.label}:</span>
+                    <span className="text-neutral-500 text-xs mr-1.5">
+                      {r.label}:
+                    </span>
                     {r.phoneDisplay}
                   </a>
                 </li>
