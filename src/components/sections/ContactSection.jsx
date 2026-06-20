@@ -21,6 +21,7 @@ import {
   staggerContainer,
   viewportOnce,
 } from "../../animations/variants";
+import SendButton from "../SendButton";
 
 // Two regional numbers — used for both "Call Us" display and WhatsApp routing
 const REGIONS = [
@@ -188,7 +189,9 @@ export default function ContactSection() {
                 Foundation
               </motion.h2>
               <motion.p variants={fadeInUp} className="section-sub max-w-md">
-                Have questions or ready to get started? We're here to help.
+                Ready to discuss your IT needs? Contact our team of experts
+                today. We’re here to help you find the perfect technology
+                solutions for your business.
               </motion.p>
 
               <motion.div
@@ -304,14 +307,9 @@ export default function ContactSection() {
                 />
               </div>
 
-              <motion.button
-                type="submit"
-                whileTap={{ scale: 0.98 }}
-                className="btn-primary w-fit min-w-[260px] mx-auto justify-center mt-1 py-3.5 text-sm shadow-[0_0_30px_rgba(30,144,255,0.35)]"
-              >
-                Send Message
-                <FaPaperPlane className="text-sm" />
-              </motion.button>
+              <div className="flex justify-center mt-1">
+                <SendButton type="submit">Send Message</SendButton>
+              </div>
 
               <AnimatePresence>
                 {submitted && (
@@ -355,7 +353,7 @@ export default function ContactSection() {
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 hover:translate-x-1 transition-all duration-300"
                     >
-                      <span className="text-white font-semibold hover:text-brand-blue-light transition-colors duration-300S">
+                      <span className="text-white font-semibold text-sm hover:text-brand-blue-light transition-colors duration-300S">
                         {r.phoneDisplay}
                       </span>
 
