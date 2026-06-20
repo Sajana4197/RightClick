@@ -106,7 +106,7 @@ export default function AboutSection() {
                 className="absolute bottom-6 left-6 bg-brand-blue rounded-xl px-5 py-4 shadow-blue-glow"
               >
                 <p className="text-white text-3xl font-extrabold leading-none">
-                  15+
+                  2+
                 </p>
                 <p className="text-white/80 text-xs mt-1 leading-tight">
                   Years of

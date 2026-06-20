@@ -57,7 +57,7 @@ const STATS = [
   { icon: <FaShieldAlt />, value: "99.9%", label: "System Uptime" },
   { icon: <FaHeadset />, value: "24/7", label: "Expert Support" },
   { icon: <FaChartLine />, value: "40%", label: "Lower IT Costs" },
-  { icon: <HiStar />, value: "500+", label: "Businesses Trust Us" },
+  // { icon: <HiStar />, value: "500+", label: "Businesses Trust Us" },
 ];
 
 function FloatingCard({ card }) {
