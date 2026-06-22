@@ -75,7 +75,7 @@ export default function AboutSection() {
             >
               {/* Real image */}
               <img
-                src="../../assets/images/about-us.png"
+                src="/assets/images/about-us.webp"
                 alt="RightClicks IT team collaborating in a modern office with global network visualization"
                 loading="lazy"
                 decoding="async"

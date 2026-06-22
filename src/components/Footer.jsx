@@ -71,7 +71,7 @@ export default function Footer() {
     >
       {/* Bottom background image */}
       <img
-        src="../../assets/images/footer.png"
+        src="/assets/images/footer.webp"
         alt=""
         loading="lazy"
         className="absolute bottom-0 left-0 w-full h-auto object-cover pointer-events-none opacity-40"

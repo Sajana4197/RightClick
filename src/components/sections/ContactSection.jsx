@@ -156,7 +156,7 @@ export default function ContactSection() {
           >
             {/* Background image */}
             <video
-              src="../../assets/videos/contact.mp4"
+              src="/assets/videos/contact.mp4"
               autoPlay
               loop
               muted

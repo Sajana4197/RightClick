@@ -171,25 +171,25 @@ const BENEFITS = [
     icon: <FaUsers />,
     title: "Collaborative Culture",
     desc: "Work with talented professionals in a supportive, inclusive environment.",
-    image: "../../assets/images/medical.jpg",
+    image: "/assets/images/medical.webp",
   },
   {
     icon: <FaChartLine />,
     title: "Career Growth",
     desc: "Clear advancement paths and opportunities to take on new challenges.",
-    image: "../../assets/images/401k.jpg",
+    image: "/assets/images/401k.webp",
   },
   {
     icon: <FaAward />,
     title: "Recognition",
     desc: "Your contributions are valued and rewarded through various recognition programs.",
-    image: "../../assets/images/flexible-work.jpg",
+    image: "/assets/images/flexible-work.webp",
   },
   {
     icon: <FaLaptopHouse />,
     title: "Remote Flexibility",
     desc: "Work from anywhere with our flexible remote-first policies.",
-    image: "../../assets/images/growth.jpg",
+    image: "/assets/images/growth.webp",
   },
 ];
 
@@ -215,7 +215,7 @@ export default function Careers() {
       <section className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[90vh] flex items-center">
         {/* Background image */}
         <img
-          src="../../assets/images/career.png"
+          src="/assets/images/career.webp"
           alt=""
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover"

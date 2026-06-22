@@ -22,37 +22,37 @@ const CARDS = [
     icon: <FaDollarSign />,
     title: "Reduce IT costs by up to 40%",
     desc: "Stop overspending on reactive fixes, outdated systems, and unnecessary overhead. Our managed IT approach helps streamline operations, optimize infrastructure, and deliver predictable technology costs—so you can invest more in growing your business.",
-    image: "../../assets/images/why-1.jpg",
+    image: "/assets/images/why-1.webp",
   },
   {
     icon: <FaClock />,
     title: "Improve system uptime to 99.9%",
     desc: "Downtime costs time, productivity, and revenue. Through proactive monitoring, preventative maintenance, and rapid response support, we keep your systems stable, available, and performing when your business needs them most.",
-    image: "../../assets/images/why-2.jpg",
+    image: "/assets/images/why-2.webp",
   },
   {
     icon: <FaShieldAlt />,
     title: "Enhanced security and compliance",
     desc: "Stay protected against evolving cyber threats while meeting industry standards and compliance requirements. We implement layered security strategies, continuous monitoring, and best practices to safeguard your data and operations.",
-    image: "../../assets/images/why-3.jpg",
+    image: "/assets/images/why-3.webp",
   },
   {
     icon: <FaUsers />,
     title: "24/7 expert support",
     desc: "Technology issues don’t follow business hours—and neither do we. Our expert support team is available around the clock to resolve issues quickly, minimize disruption, and ensure your team stays productive.",
-    image: "../../assets/images/why-4.jpg",
+    image: "/assets/images/why-4.webp",
   },
   {
     icon: <FaCheckSquare />,
     title: "Scalable solutions",
     desc: "Your technology should support growth, not limit it. We design flexible and scalable IT environments that adapt to changing business demands, making expansion smoother and more efficient.",
-    image: "../../assets/images/why-5.jpg",
+    image: "/assets/images/why-5.webp",
   },
   {
     icon: <FaListAlt />,
     title: "Strategic technology planning",
     desc: "Make smarter technology decisions with a long-term strategy. We work closely with your business to align IT investments with goals, improve efficiency, reduce risk, and create a roadmap for future growth.",
-    image: "../../assets/images/why-6.jpg",
+    image: "/assets/images/why-6.webp",
   },
 ];
 
