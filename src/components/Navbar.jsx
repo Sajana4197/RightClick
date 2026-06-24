@@ -190,7 +190,7 @@ export default function Navbar() {
           >
             <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-md">
               <img
-                src="/Logo.png"
+                src="/Logo.webp"
                 alt="RightClicks logo"
                 className="w-12 h-12 object-contain"
               />
