@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaWhatsapp, FaChevronDown } from "react-icons/fa";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useScrolled } from "../hooks/useScrolled";
-import { scrollToSection } from "../hooks/useLenis";
+import { scrollToSection, scrollToTop } from "../hooks/useLenis";
 
 // Two regional WhatsApp numbers — keep in sync with ContactSection.jsx / Footer.jsx
 const REGIONS = [
@@ -127,10 +127,24 @@ export default function Navbar() {
       return;
     }
 
-    // Section-based link — navigate home first if on another page
+    // Home section — scroll to top
+    if (link.id === "home") {
+      if (location.pathname !== "/") {
+        navigate("/", {
+          state: {
+            scrollTop: true,
+          },
+        });
+      } else {
+        scrollToTop(true);
+      }
+
+      return;
+    }
+    // Other section-based links — navigate home first if on another page
     if (location.pathname !== "/") {
       navigate("/");
-      setTimeout(() => scrollToSection(link.id), 100);
+      setTimeout(() => scrollToSection(link.id), 300);
     } else {
       scrollToSection(link.id);
     }
@@ -240,7 +254,7 @@ export default function Navbar() {
               <FaWhatsapp className="text-sm" />
               <div className="flex flex-col leading-none">
                 <span className="text-[9px] font-normal opacity-80">
-                  Call Us
+                  Chat with Us
                 </span>
                 <span className="text-xs font-bold">WhatsApp</span>
               </div>

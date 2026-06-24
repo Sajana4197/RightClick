@@ -109,8 +109,12 @@ export default function HeroSection() {
           loop
           muted
           playsInline
+          preload="none"
+          style={{ opacity: 0, transition: "opacity 1s ease" }}
+          onCanPlay={(e) => {
+            e.target.style.opacity = 0.75;
+          }}
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.75 }}
         >
           <source src="/assets/videos/hero.mp4" type="video/mp4" />
         </video>

@@ -8,8 +8,8 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
-import { scrollToSection } from "../hooks/useLenis";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { scrollToSection, scrollToTop } from "../hooks/useLenis";
 
 // Two regional WhatsApp numbers — keep in sync with ContactSection.jsx
 const REGIONS = [
@@ -62,6 +62,25 @@ const SOCIALS = [
 
 export default function Footer() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleFooterNav = (id) => {
+    if (id === "home") {
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => scrollToTop(), 150);
+      } else {
+        scrollToTop();
+      }
+      return;
+    }
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => scrollToSection(id), 300);
+    } else {
+      scrollToSection(id);
+    }
+  };
   const year = new Date().getFullYear();
 
   return (
@@ -71,7 +90,7 @@ export default function Footer() {
     >
       {/* Bottom background image */}
       <img
-        src="/assets/images/footer.webp"
+        src="../../assets/images/footer.png"
         alt=""
         loading="lazy"
         className="absolute bottom-0 left-0 w-full h-auto object-cover pointer-events-none opacity-40"
@@ -103,7 +122,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-1">
             <button
-              onClick={() => scrollToSection("home")}
+              onClick={() => handleFooterNav("home")}
               className="flex items-center gap-2.5 mb-4"
             >
               <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-md">
@@ -143,7 +162,7 @@ export default function Footer() {
               {SERVICES.map((s) => (
                 <li key={s}>
                   <button
-                    onClick={() => scrollToSection("services")}
+                    onClick={() => handleFooterNav("services")}
                     className="
         text-neutral-400
         text-sm
@@ -160,7 +179,7 @@ export default function Footer() {
 
               <li>
                 <button
-                  onClick={() => scrollToSection("services")}
+                  onClick={() => handleFooterNav("services")}
                   className="inline-flex items-center gap-2 text-brand-blue text-sm font-medium hover:translate-x-1 transition-all duration-300"
                 >
                   See More
@@ -181,9 +200,17 @@ export default function Footer() {
                   <button
                     onClick={() => {
                       if (c.path) {
-                        navigate(c.path);
+                        navigate(
+                          c.path,
+
+                          {
+                            state: {
+                              scrollTop: true,
+                            },
+                          },
+                        );
                       } else {
-                        scrollToSection(c.id);
+                        handleFooterNav(c.id);
                       }
                     }}
                     className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 text-left"
@@ -204,7 +231,7 @@ export default function Footer() {
               {SUPPORT.map((s) => (
                 <li key={s.label}>
                   <button
-                    onClick={() => scrollToSection(s.id)}
+                    onClick={() => handleFooterNav(s.id)}
                     className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 text-left"
                   >
                     {s.label}

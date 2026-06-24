@@ -32,7 +32,7 @@ const SERVICES = [
   {
     icon: <FaHeadset />,
     title: "Help Desk Support — 24/7 (Remote / On-Site)",
-    desc: "Our Help Desk Support provides quick, reliable assistance to keep your technology performing at its best, minimizing downtime and ensuring your business stays on track at all times..",
+    desc: "Our Help Desk Support provides quick, reliable assistance to keep your technology performing at its best, minimizing downtime and ensuring your business stays on track at all times.",
   },
   {
     icon: <FaUserTie />,
@@ -119,6 +119,7 @@ export default function ServicesSection() {
           scrub: 0.6,
           pin: pinRef.current,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 

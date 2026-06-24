@@ -1,42 +1,62 @@
 // src/hooks/useLenis.js
-import { useEffect } from 'react'
-import Lenis from '@studio-freight/lenis'
+import { useEffect } from "react";
+import Lenis from "@studio-freight/lenis";
 
-let lenisInstance = null
+let lenisInstance = null;
 
 export function useLenis() {
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
+      direction: "vertical",
+      gestureDirection: "vertical",
       smooth: true,
       smoothTouch: false,
       touchMultiplier: 2,
-    })
+    });
 
-    lenisInstance = lenis
+    lenisInstance = lenis;
 
     function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf)
+    requestAnimationFrame(raf);
 
     return () => {
-      lenis.destroy()
-      lenisInstance = null
-    }
-  }, [])
+      lenis.destroy();
+      lenisInstance = null;
+    };
+  }, []);
+}
+
+export function scrollToTop(smooth = false) {
+  if (lenisInstance) {
+    lenisInstance.scrollTo(
+      0,
+
+      {
+        immediate: !smooth,
+
+        duration: smooth ? 1.2 : 0,
+      },
+    );
+  } else {
+    window.scrollTo({
+      top: 0,
+
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }
 }
 
 export function scrollToSection(id) {
-  const el = document.getElementById(id)
+  const el = document.getElementById(id);
   if (el && lenisInstance) {
-    lenisInstance.scrollTo(el, { offset: -72, duration: 1.4 })
+    lenisInstance.scrollTo(el, { offset: -72, duration: 1.4 });
   } else if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }

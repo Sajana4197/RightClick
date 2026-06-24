@@ -208,7 +208,7 @@ function Logo3DBadge() {
           style={{ transform: "translateZ(10px)" }}
         >
           <img
-            src="/Logo.png"
+            src="/Logo.webp"
             alt="RightClicks logo"
             className="w-14 h-14 object-contain"
             style={{ filter: "drop-shadow(0 2px 6px rgba(30,144,255,0.5))" }}
