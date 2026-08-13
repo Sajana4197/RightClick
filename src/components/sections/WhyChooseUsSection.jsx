@@ -1,6 +1,7 @@
 // src/components/sections/WhyChooseUsSection.jsx
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FaDollarSign,
   FaUsers,
@@ -17,49 +18,31 @@ import {
 } from "../../animations/variants";
 import { scrollToSection } from "../../hooks/useLenis";
 
-const CARDS = [
-  {
-    icon: <FaDollarSign />,
-    title: "Reduce IT costs by up to 40%",
-    desc: "Stop overspending on reactive fixes, outdated systems, and unnecessary overhead. Our managed IT approach helps streamline operations, optimize infrastructure, and deliver predictable technology costs—so you can invest more in growing your business.",
-    image: "/assets/images/why-1.webp",
-  },
-  {
-    icon: <FaClock />,
-    title: "Improve system uptime to 99.9%",
-    desc: "Downtime costs time, productivity, and revenue. Through proactive monitoring, preventative maintenance, and rapid response support, we keep your systems stable, available, and performing when your business needs them most.",
-    image: "/assets/images/why-2.webp",
-  },
-  {
-    icon: <FaShieldAlt />,
-    title: "Enhanced security and compliance",
-    desc: "Stay protected against evolving cyber threats while meeting industry standards and compliance requirements. We implement layered security strategies, continuous monitoring, and best practices to safeguard your data and operations.",
-    image: "/assets/images/why-3.webp",
-  },
-  {
-    icon: <FaUsers />,
-    title: "24/7 expert support",
-    desc: "Technology issues don’t follow business hours—and neither do we. Our expert support team is available around the clock to resolve issues quickly, minimize disruption, and ensure your team stays productive.",
-    image: "/assets/images/why-4.webp",
-  },
-  {
-    icon: <FaCheckSquare />,
-    title: "Scalable solutions",
-    desc: "Your technology should support growth, not limit it. We design flexible and scalable IT environments that adapt to changing business demands, making expansion smoother and more efficient.",
-    image: "/assets/images/why-5.webp",
-  },
-  {
-    icon: <FaListAlt />,
-    title: "Strategic technology planning",
-    desc: "Make smarter technology decisions with a long-term strategy. We work closely with your business to align IT investments with goals, improve efficiency, reduce risk, and create a roadmap for future growth.",
-    image: "/assets/images/why-6.webp",
-  },
+const CARDS_META = [
+  { id: "cost", icon: <FaDollarSign />, image: "/assets/images/why-1.webp" },
+  { id: "uptime", icon: <FaClock />, image: "/assets/images/why-2.webp" },
+  { id: "security", icon: <FaShieldAlt />, image: "/assets/images/why-3.webp" },
+  { id: "support", icon: <FaUsers />, image: "/assets/images/why-4.webp" },
+  { id: "scalable", icon: <FaCheckSquare />, image: "/assets/images/why-5.webp" },
+  { id: "planning", icon: <FaListAlt />, image: "/assets/images/why-6.webp" },
 ];
 
 // Custom "ease out expo-ish" curve from the reference codepen
 const EASING =
   "linear(0 0%, 0.1538 4.09%, 0.2926 8.29%, 0.4173 12.63%, 0.5282 17.12%, 0.6255 21.77%, 0.7099 26.61%, 0.782 31.67%, 0.8425 37%, 0.8887 42.23%, 0.9257 47.79%, 0.9543 53.78%, 0.9752 60.32%, 0.9883 67.11%, 0.9961 75%, 1 100%)";
 const SPEED = 0.6; // seconds
+
+// The title renders as a single nowrap line (rotated 90deg when collapsed,
+// horizontal when active) inside a fixed-size panel, so it has no natural
+// wrapping fallback. Longer translations of the same label (French routinely
+// runs 30-70% longer than English) can overflow that fixed space, so we
+// shrink the font past a safe character count instead of clipping.
+function titleFontSize(title, active) {
+  const len = title.length;
+  return active
+    ? Math.max(14, 20 - Math.max(0, len - 38) * 0.35)
+    : Math.max(11, 14 - Math.max(0, len - 46) * 0.15);
+}
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(
@@ -75,9 +58,16 @@ function useIsMobile(breakpoint = 768) {
 }
 
 export default function WhyChooseUsSection() {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const listRef = useRef(null);
   const isMobile = useIsMobile();
+
+  const CARDS = CARDS_META.map((c) => ({
+    ...c,
+    title: t(`whyChooseUs.cards.${c.id}.title`),
+    desc: t(`whyChooseUs.cards.${c.id}.desc`),
+  }));
 
   return (
     <section
@@ -104,11 +94,13 @@ export default function WhyChooseUsSection() {
           className="text-center mb-14"
         >
           <motion.p variants={fadeInUp} className="eyebrow mb-3">
-            Why Choose Us
+            {t("whyChooseUs.eyebrow")}
           </motion.p>
           <motion.h2 variants={fadeInUp} className="section-heading">
-            IT Support That Goes{" "}
-            <span className="text-gradient-blue">Beyond</span>
+            {t("whyChooseUs.headline")}{" "}
+            <span className="text-gradient-blue">
+              {t("whyChooseUs.headlineHighlight")}
+            </span>
           </motion.h2>
         </motion.div>
 
@@ -150,7 +142,7 @@ export default function WhyChooseUsSection() {
 
               return (
                 <DisclosurePanel
-                  key={card.title}
+                  key={card.id}
                   card={card}
                   index={i}
                   active={i === activeIndex}
@@ -167,6 +159,7 @@ export default function WhyChooseUsSection() {
 }
 
 function DisclosurePanel({ card, index, active, size, isMobile }) {
+  const { t } = useTranslation();
   return (
     <li
       data-idx={index}
@@ -254,7 +247,9 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
           right: "auto",
           transformOrigin: "0 50%",
           rotate: isMobile ? "0deg" : active ? "0deg" : "90deg",
-          fontSize: active ? "20px" : isMobile ? "15px" : "14px",
+          fontSize: isMobile
+            ? "15px"
+            : `${titleFontSize(card.title, active)}px`,
           fontWeight: 700,
           letterSpacing: "0.08em",
           textTransform: "uppercase",
@@ -373,7 +368,8 @@ function DisclosurePanel({ card, index, active, size, isMobile }) {
           }}
           className="hover:underline"
         >
-          Learn More <FaArrowRight style={{ fontSize: "10px" }} />
+          {t("whyChooseUs.learnMore")}{" "}
+          <FaArrowRight style={{ fontSize: "10px" }} />
         </button>
       </div>
 

@@ -1,6 +1,7 @@
 // src/components/sections/ContactSection.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FaPhone,
   FaEnvelope,
@@ -24,56 +25,55 @@ import {
 import SendButton from "../SendButton";
 
 // Two regional numbers — used for both "Call Us" display and WhatsApp routing
-const REGIONS = [
+// (label/message come from translations; only the routing data lives here)
+const REGION_META = [
   {
     id: "lk",
-    label: "Sri Lanka",
     phoneDisplay: "+94 77 297 5000",
     phoneTel: "+94772975000",
     whatsapp: "94772975000",
-    defaultMessage:
-      "Hi RightClicks, I'd like to know more about your IT services.",
   },
   {
     id: "ca",
-    label: "Canada",
     phoneDisplay: "+1 (250) 885-5678",
     phoneTel: "+12508855678",
     whatsapp: "12508855678",
-    defaultMessage:
-      "Hi RightClicks, I'd like to know more about your IT services.",
   },
 ];
 
-const CONTACT_INFO_STATIC = [
+// Email address is not translated
+const CONTACT_INFO_META = [
   {
     icon: <FaEnvelope />,
-    label: "Email Us",
     value: "info@RightClicks.lk",
     href: "mailto:info@rightclicks.lk",
   },
 ];
 
 // Floating trust/feature cards shown over the left-panel image
-const HIGHLIGHTS = [
-  {
-    icon: <FaBolt />,
-    title: "Fast Response",
-    subtitle: "We reply within 24 hours",
-  },
-  {
-    icon: <FaShieldAlt />,
-    title: "Secure Consultation",
-    subtitle: "Your data and privacy are our priority",
-  },
-  {
-    icon: <FaGlobe />,
-    title: "Global Support",
-    subtitle: "Serving clients across the globe",
-  },
+const HIGHLIGHTS_META = [
+  { id: "fastResponse", icon: <FaBolt /> },
+  { id: "secureConsultation", icon: <FaShieldAlt /> },
+  { id: "globalSupport", icon: <FaGlobe /> },
 ];
 
 export default function ContactSection() {
+  const { t } = useTranslation();
+  const REGIONS = REGION_META.map((r) => ({
+    ...r,
+    label: t(`contact.regions.${r.id}.label`),
+    defaultMessage: t(`navbar.regions.${r.id}.message`),
+  }));
+  const CONTACT_INFO_STATIC = CONTACT_INFO_META.map((c) => ({
+    ...c,
+    label: t("contact.emailUs"),
+  }));
+  const HIGHLIGHTS = HIGHLIGHTS_META.map((h) => ({
+    ...h,
+    title: t(`contact.highlights.${h.id}.title`),
+    subtitle: t(`contact.highlights.${h.id}.subtitle`),
+  }));
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -99,13 +99,15 @@ export default function ContactSection() {
     const selectedRegion = REGIONS.find((r) => r.id === regionId) || REGIONS[0];
 
     const lines = [
-      `New website inquiry`,
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      form.phone ? `Phone: ${form.phone}` : null,
-      form.company ? `Company: ${form.company}` : null,
+      t("contact.whatsappMessage.inquiry"),
+      `${t("contact.whatsappMessage.name")}: ${form.name}`,
+      `${t("contact.whatsappMessage.email")}: ${form.email}`,
+      form.phone ? `${t("contact.whatsappMessage.phone")}: ${form.phone}` : null,
+      form.company
+        ? `${t("contact.whatsappMessage.company")}: ${form.company}`
+        : null,
       ``,
-      `Message:`,
+      `${t("contact.whatsappMessage.message")}:`,
       form.message,
     ].filter(Boolean);
 
@@ -172,7 +174,7 @@ export default function ContactSection() {
 
             <div className="relative z-10 max-w-[420px]">
               <motion.p variants={fadeInUp} className="eyebrow mb-2">
-                Contact Us
+                {t("contact.eyebrow")}
               </motion.p>
               <motion.span
                 variants={fadeInUp}
@@ -183,15 +185,16 @@ export default function ContactSection() {
                 className="font-extrabold text-white mb-4"
                 style={{ fontSize: "34px", lineHeight: 1.2 }}
               >
-                Let's Build a Stronger,
+                {t("contact.headlineLine1")}
                 <br />
-                More <span className="text-gradient-blue">Secure IT</span>{" "}
-                Foundation
+                {t("contact.headlineLine2")}{" "}
+                <span className="text-gradient-blue">
+                  {t("contact.headlineHighlight")}
+                </span>{" "}
+                {t("contact.headlineLine2Suffix")}
               </motion.h2>
               <motion.p variants={fadeInUp} className="section-sub max-w-md">
-                Ready to discuss your IT needs? Contact our team of experts
-                today. We’re here to help you find the perfect technology
-                solutions for your business.
+                {t("contact.paragraph")}
               </motion.p>
 
               <motion.div
@@ -200,7 +203,7 @@ export default function ContactSection() {
               >
                 {HIGHLIGHTS.map((h) => (
                   <div
-                    key={h.title}
+                    key={h.id}
                     className="flex items-center gap-3 bg-dark-900/50 border border-brand-blue/15 rounded-xl px-4 py-2.5 backdrop-blur-sm"
                   >
                     <div className="w-10 h-10 rounded-lg bg-brand-blue/15 border border-brand-blue/30 flex items-center justify-center text-brand-blue text-base flex-shrink-0">
@@ -232,7 +235,7 @@ export default function ContactSection() {
                   <input
                     type="text"
                     name="name"
-                    placeholder="Your Name"
+                    placeholder={t("contact.form.namePlaceholder")}
                     value={form.name}
                     onChange={handleChange}
                     required
@@ -244,7 +247,7 @@ export default function ContactSection() {
                   <input
                     type="email"
                     name="email"
-                    placeholder="Your Email"
+                    placeholder={t("contact.form.emailPlaceholder")}
                     value={form.email}
                     onChange={handleChange}
                     required
@@ -258,7 +261,7 @@ export default function ContactSection() {
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="Your Phone"
+                    placeholder={t("contact.form.phonePlaceholder")}
                     value={form.phone}
                     onChange={handleChange}
                     className="w-full bg-dark-600 border border-dark-400/60 rounded-lg pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-brand-blue/60 focus:ring-1 focus:ring-brand-blue/30 transition-all duration-200"
@@ -269,7 +272,7 @@ export default function ContactSection() {
                   <input
                     type="text"
                     name="company"
-                    placeholder="Company Name"
+                    placeholder={t("contact.form.companyPlaceholder")}
                     value={form.company}
                     onChange={handleChange}
                     className="w-full bg-dark-600 border border-dark-400/60 rounded-lg pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-brand-blue/60 focus:ring-1 focus:ring-brand-blue/30 transition-all duration-200"
@@ -280,7 +283,7 @@ export default function ContactSection() {
                 <FaCommentDots className="pointer-events-none absolute left-4 top-4 text-neutral-500 text-sm" />
                 <textarea
                   name="message"
-                  placeholder="How can we help you?"
+                  placeholder={t("contact.form.messagePlaceholder")}
                   value={form.message}
                   onChange={handleChange}
                   onWheel={(e) => {
@@ -308,7 +311,7 @@ export default function ContactSection() {
               </div>
 
               <div className="flex justify-center mt-1">
-                <SendButton type="submit">Send Message</SendButton>
+                <SendButton type="submit">{t("contact.form.sendButton")}</SendButton>
               </div>
 
               <AnimatePresence>
@@ -319,7 +322,7 @@ export default function ContactSection() {
                     exit={{ opacity: 0 }}
                     className="text-center text-sm text-brand-blue-light"
                   >
-                    WhatsApp opened — just hit send there to reach our team.
+                    {t("contact.form.submitted")}
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -329,7 +332,7 @@ export default function ContactSection() {
             <div className="flex items-center gap-4 my-5">
               <span className="flex-1 h-px bg-dark-400/60" />
               <span className="text-[11px] tracking-widest text-neutral-500 uppercase whitespace-nowrap">
-                Or contact us directly
+                {t("contact.divider")}
               </span>
               <span className="flex-1 h-px bg-dark-400/60" />
             </div>
@@ -342,7 +345,7 @@ export default function ContactSection() {
                   <FaPhone />
                 </div>
                 <p className="text-brand-blue text-xs font-semibold uppercase tracking-wider mb-2">
-                  Call Us
+                  {t("contact.callUs")}
                 </p>
                 <div className="flex flex-col items-center gap-1.5">
                   {REGIONS.map((r) => (
@@ -369,7 +372,7 @@ export default function ContactSection() {
               <div className="flex flex-col items-center px-2">
                 {CONTACT_INFO_STATIC.map((item) => (
                   <a
-                    key={item.label}
+                    key={item.href}
                     href={item.href}
                     className="flex flex-col items-center group"
                   >
@@ -411,17 +414,17 @@ export default function ContactSection() {
             >
               <button
                 onClick={() => setShowRegionPicker(false)}
-                aria-label="Close"
+                aria-label={t("contact.regionModal.close")}
                 className="absolute top-4 right-4 w-8 h-8 rounded-lg border border-dark-400/60 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-blue/50 transition-all duration-200"
               >
                 <FaTimes className="text-sm" />
               </button>
 
               <h3 className="text-white font-bold text-lg mb-1.5">
-                Choose a region
+                {t("contact.regionModal.title")}
               </h3>
               <p className="text-neutral-400 text-sm mb-6">
-                We'll open WhatsApp with your message ready to send.
+                {t("contact.regionModal.subtitle")}
               </p>
 
               <div className="flex flex-col gap-3">

@@ -1,6 +1,7 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -9,10 +10,12 @@ import Careers from "./pages/Careers";
 import ErrorBoundary from "./components/ErrorBoundary";
 import LoadingScreen from "./components/LoadingScreen";
 import { useLenis, scrollToTop } from "./hooks/useLenis";
+import { getLangFromPath } from "./hooks/useLangRoute";
 
 function AppContent() {
   useLenis();
   const location = useLocation();
+  const { i18n } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -22,10 +25,28 @@ function AppContent() {
         effect: { name: "trail", color: "rainbow" },
       });
     }
-    // Recalculate all ScrollTrigger positions once lazy sections have mounted
+  }, []);
+
+  // Recalculate all ScrollTrigger positions once lazy sections have mounted.
+  // Re-runs on every route change (not just the first mount) because switching
+  // language ("/" <-> "/fr") unmounts/remounts Home's lazy sections with
+  // differently-sized translated text, which shifts page layout and would
+  // otherwise leave stale (pre-refresh) trigger positions like the pinned
+  // ServicesSection stack until a full page reload.
+  useEffect(() => {
     const t = setTimeout(() => ScrollTrigger.refresh(), 600);
     return () => clearTimeout(t);
-  }, []);
+  }, [location.pathname]);
+
+  // Keep i18next + <html lang> in sync with the active route's language tree
+  // ("/fr..." => French, everything else => English).
+  useEffect(() => {
+    const lang = getLangFromPath(location.pathname);
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
+    document.documentElement.lang = lang;
+  }, [location.pathname, i18n]);
 
   // Scroll to top + refresh ScrollTrigger on route change
   useEffect(() => {
@@ -59,9 +80,22 @@ function AppContent() {
 
       <div id="main-content">
         <Routes>
+          {/* English tree — unprefixed, preserves existing SEO/indexing */}
           <Route path="/" element={<Home />} />
           <Route
             path="/careers"
+            element={
+              <>
+                <Careers />
+                <Footer />
+              </>
+            }
+          />
+
+          {/* French tree — mirrors the English routes under /fr */}
+          <Route path="/fr" element={<Home />} />
+          <Route
+            path="/fr/careers"
             element={
               <>
                 <Careers />

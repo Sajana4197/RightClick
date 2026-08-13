@@ -9,48 +9,37 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { scrollToSection, scrollToTop } from "../hooks/useLenis";
+import useLangRoute, { stripLangPrefix } from "../hooks/useLangRoute";
 
 // Two regional WhatsApp numbers — keep in sync with ContactSection.jsx
-const REGIONS = [
+// (label/message come from translations; only the routing data lives here)
+const REGION_META = [
   {
     id: "lk",
-    label: "Sri Lanka",
     phoneDisplay: "+94 77 297 5000",
     whatsapp: "94772975000",
-    defaultMessage:
-      "Hi RightClicks, I'd like to know more about your IT services.",
   },
   {
     id: "ca",
-    label: "Canada",
     phoneDisplay: "+1 (250) 885-5678",
     whatsapp: "12508855678",
-    defaultMessage:
-      "Hi RightClicks, I'd like to know more about your IT services.",
   },
 ];
 
-const SERVICES = [
-  "Managed IT Services",
-  "Help Desk Support",
-  "IT Consulting",
-  "Cyber Security",
-  "Cloud Services",
+const COMPANY_LINKS = [
+  { key: "about", id: "about" },
+  { key: "why", id: "why" },
+  { key: "careers", path: "/careers" },
+  // { key: "insights", id: "reviews" },
 ];
 
-const COMPANY = [
-  { label: "About Us", id: "about" },
-  { label: "Why RightClicks", id: "why" },
-  { label: "Careers", path: "/careers" },
-  // { label: "News & Insights", id: "reviews" },
-];
-
-const SUPPORT = [
-  { label: "Contact Us", id: "contact" },
-  { label: "FAQ", id: "contact" },
-  // { label: "Case Studies", id: "reviews" },
-  { label: "Resources", id: "services" },
+const SUPPORT_LINKS = [
+  { key: "contact", id: "contact" },
+  { key: "faq", id: "contact" },
+  // { key: "caseStudies", id: "reviews" },
+  { key: "resources", id: "services" },
 ];
 
 const SOCIALS = [
@@ -61,21 +50,32 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const { buildPath } = useLangRoute();
+  const canonicalPath = stripLangPrefix(location.pathname);
+
+  const REGIONS = REGION_META.map((r) => ({
+    ...r,
+    label: t(`footer.regions.${r.id}.label`),
+    defaultMessage: t(`navbar.regions.${r.id}.message`),
+  }));
+
+  const SERVICES = t("footer.services", { returnObjects: true });
 
   const handleFooterNav = (id) => {
     if (id === "home") {
-      if (location.pathname !== "/") {
-        navigate("/");
+      if (canonicalPath !== "/") {
+        navigate(buildPath("/"));
         setTimeout(() => scrollToTop(), 150);
       } else {
         scrollToTop();
       }
       return;
     }
-    if (location.pathname !== "/") {
-      navigate("/");
+    if (canonicalPath !== "/") {
+      navigate(buildPath("/"));
       setTimeout(() => scrollToSection(id), 300);
     } else {
       scrollToSection(id);
@@ -137,8 +137,7 @@ export default function Footer() {
               </span>
             </button>
             <p className="text-neutral-400 text-sm leading-relaxed mb-5 max-w-xs">
-              RightClicks is a leading managed IT service provider helping
-              businesses stay secure, productive, and prepared for the future.
+              {t("footer.tagline")}
             </p>
             <div className="flex items-center gap-3">
               {SOCIALS.map((s, i) => (
@@ -156,7 +155,7 @@ export default function Footer() {
           {/* Services */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide">
-              Services
+              {t("footer.servicesHeading")}
             </h4>
             <ul className="flex flex-col gap-2.5">
               {SERVICES.map((s) => (
@@ -182,7 +181,7 @@ export default function Footer() {
                   onClick={() => handleFooterNav("services")}
                   className="inline-flex items-center gap-2 text-brand-blue text-sm font-medium hover:translate-x-1 transition-all duration-300"
                 >
-                  See More
+                  {t("footer.seeMore")}
                   <span>→</span>
                 </button>
               </li>
@@ -192,16 +191,16 @@ export default function Footer() {
           {/* Company */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide">
-              Company
+              {t("footer.companyHeading")}
             </h4>
             <ul className="flex flex-col gap-2.5">
-              {COMPANY.map((c) => (
-                <li key={c.label}>
+              {COMPANY_LINKS.map((c) => (
+                <li key={c.key}>
                   <button
                     onClick={() => {
                       if (c.path) {
                         navigate(
-                          c.path,
+                          buildPath(c.path),
 
                           {
                             state: {
@@ -215,7 +214,7 @@ export default function Footer() {
                     }}
                     className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 text-left"
                   >
-                    {c.label}
+                    {t(`footer.company.${c.key}`)}
                   </button>
                 </li>
               ))}
@@ -225,16 +224,16 @@ export default function Footer() {
           {/* Support */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide">
-              Support
+              {t("footer.supportHeading")}
             </h4>
             <ul className="flex flex-col gap-2.5">
-              {SUPPORT.map((s) => (
-                <li key={s.label}>
+              {SUPPORT_LINKS.map((s) => (
+                <li key={s.key}>
                   <button
                     onClick={() => handleFooterNav(s.id)}
                     className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200 text-left"
                   >
-                    {s.label}
+                    {t(`footer.support.${s.key}`)}
                   </button>
                 </li>
               ))}
@@ -244,7 +243,7 @@ export default function Footer() {
           {/* Contact Us */}
           <div>
             <h4 className="text-white font-semibold text-sm mb-4 tracking-wide">
-              Contact Us
+              {t("footer.contactHeading")}
             </h4>
             <ul className="flex flex-col gap-3">
               {REGIONS.map((r) => (
@@ -279,20 +278,20 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-dark-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-neutral-500 text-xs">
-            © {year} RightClicks. All rights reserved.
+            {t("footer.copyright", { year })}
           </p>
           <div className="flex items-center gap-6">
             <a
               href="#"
               className="text-neutral-500 text-xs hover:text-brand-blue transition-colors duration-200"
             >
-              Privacy Policy
+              {t("footer.privacyPolicy")}
             </a>
             <a
               href="#"
               className="text-neutral-500 text-xs hover:text-brand-blue transition-colors duration-200"
             >
-              Terms of Service
+              {t("footer.termsOfService")}
             </a>
           </div>
         </div>

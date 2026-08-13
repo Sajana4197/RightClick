@@ -1,6 +1,7 @@
 // src/components/sections/AboutSection.jsx
 import { useRef } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { FaArrowRight, FaUsers } from "react-icons/fa";
 import {
   fadeInUp,
@@ -12,6 +13,8 @@ import {
 import { scrollToSection } from "../../hooks/useLenis";
 
 export default function AboutSection() {
+  const { t } = useTranslation();
+
   return (
     <section
       id="about"
@@ -38,25 +41,21 @@ export default function AboutSection() {
             viewport={viewportOnce}
           >
             <motion.p variants={fadeInUp} className="eyebrow mb-4">
-              About Us
+              {t("about.eyebrow")}
             </motion.p>
             <motion.h2 variants={fadeInUp} className="section-heading mb-6">
-              We Make Technology
+              {t("about.headlineLine1")}
               <br />
-              Work for <span className="text-gradient-blue">You</span>
+              {t("about.headlineLine2")}{" "}
+              <span className="text-gradient-blue">
+                {t("about.headlineHighlight")}
+              </span>
             </motion.h2>
             <motion.p variants={fadeInUp} className="section-sub mb-4 max-w-md">
-              We've been helping businesses leverage technology to grow,
-              innovate, and stay competitive in an ever-evolving digital
-              landscape.
+              {t("about.paragraph1")}
             </motion.p>
             <motion.p variants={fadeInUp} className="section-sub mb-8 max-w-md">
-              At RightClicks, we are a rapidly growing IT support and service
-              company dedicated to delivering fully managed IT solutions
-              tailored to meet the unique needs of your business. With a strong
-              presence in Sri Lanka, Maldives, and Canada, we proudly offer
-              worldwide support and services that keep your technology running
-              smoothly and securely, no matter where you are.
+              {t("about.paragraph2")}
             </motion.p>
           </motion.div>
 
@@ -106,12 +105,12 @@ export default function AboutSection() {
                 className="absolute bottom-6 left-6 bg-brand-blue rounded-xl px-5 py-4 shadow-blue-glow"
               >
                 <p className="text-white text-3xl font-extrabold leading-none">
-                  2+
+                  {t("about.yearsBadge.value")}
                 </p>
                 <p className="text-white/80 text-xs mt-1 leading-tight">
-                  Years of
+                  {t("about.yearsBadge.label")}
                   <br />
-                  Experience
+                  {t("about.yearsBadge.labelLine2")}
                 </p>
               </motion.div>
             </div>

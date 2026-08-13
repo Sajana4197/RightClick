@@ -1,6 +1,7 @@
 // src/components/sections/ReviewsSection.jsx
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { FaStar } from "react-icons/fa";
 import {
   fadeInUp,
@@ -8,35 +9,12 @@ import {
   viewportOnce,
 } from "../../animations/variants";
 
-const REVIEWS = [
-  {
-    quote:
-      "RightClicks has been instrumental in keeping our systems secure and our team productive. Their response time is unmatched.",
-    name: "Jason M.",
-    role: "IT Director, Healthcare",
-    rating: 5,
-  },
-  {
-    quote:
-      "Their proactive approach to IT management has saved us thousands in downtime and unexpected costs. Highly recommend!",
-    name: "Melissa R.",
-    role: "Operations Manager",
-    rating: 5,
-  },
-  {
-    quote:
-      "RightClicks feels like an extension of our team. Reliable, knowledgeable, and always one step ahead.",
-    name: "David T.",
-    role: "CEO, Manufacturing",
-    rating: 5,
-  },
-  {
-    quote:
-      "Switching to RightClicks was the best IT decision we made. Our infrastructure has never been more stable or secure.",
-    name: "Angela P.",
-    role: "Finance Director, Retail",
-    rating: 5,
-  },
+// Names are left untranslated (proper nouns); quote/role come from translations.
+const REVIEWS_META = [
+  { id: "jason", rating: 5 },
+  { id: "melissa", rating: 5 },
+  { id: "david", rating: 5 },
+  { id: "angela", rating: 5 },
 ];
 
 // Per-depth visual styles — depth 0 = front (active), higher = further back
@@ -113,6 +91,14 @@ function useIsMobile(breakpoint = 640) {
 }
 
 export default function ReviewsSection() {
+  const { t } = useTranslation();
+  const REVIEWS = REVIEWS_META.map((r) => ({
+    ...r,
+    quote: t(`reviews.items.${r.id}.quote`),
+    name: t(`reviews.items.${r.id}.name`),
+    role: t(`reviews.items.${r.id}.role`),
+  }));
+
   // order[0] is the front-most (active) card index into REVIEWS
   const [order, setOrder] = useState([0, 1, 2, 3]);
   const [paused, setPaused] = useState(false);
@@ -163,11 +149,13 @@ export default function ReviewsSection() {
           className="text-center mb-16"
         >
           <motion.p variants={fadeInUp} className="eyebrow mb-3">
-            Reviews
+            {t("reviews.eyebrow")}
           </motion.p>
           <motion.h2 variants={fadeInUp} className="section-heading">
-            Real Partners. Real{" "}
-            <span className="text-gradient-blue">Results.</span>
+            {t("reviews.headline")}{" "}
+            <span className="text-gradient-blue">
+              {t("reviews.headlineHighlight")}
+            </span>
           </motion.h2>
         </motion.div>
 
@@ -193,7 +181,7 @@ export default function ReviewsSection() {
 
                 return (
                   <motion.div
-                    key={review.name}
+                    key={review.id}
                     onClick={() => bringToFront(reviewIdx)}
                     className="absolute left-0 top-0 w-full rounded-2xl p-5 cursor-pointer"
                     style={{ zIndex: REVIEWS.length - depth }}
@@ -276,19 +264,19 @@ export default function ReviewsSection() {
             className="lg:pl-8 xl:pl-16"
           >
             <motion.p variants={fadeInUp} className="eyebrow mb-3">
-              What Clients Say
+              {t("reviews.sideEyebrow")}
             </motion.p>
             <motion.h3
               variants={fadeInUp}
               className="text-2xl md:text-3xl font-bold text-white mb-5 leading-snug"
             >
-              Trusted by businesses across{" "}
-              <span className="text-gradient-blue">every industry.</span>
+              {t("reviews.sideHeadline")}{" "}
+              <span className="text-gradient-blue">
+                {t("reviews.sideHeadlineHighlight")}
+              </span>
             </motion.h3>
             <motion.p variants={fadeInUp} className="section-sub mb-4 max-w-md">
-              From healthcare to manufacturing, RightClicks partners with
-              growing companies to keep their technology secure, reliable, and
-              built for what's next.
+              {t("reviews.paragraph")}
             </motion.p>
 
             {/* Aggregate rating */}
@@ -303,7 +291,7 @@ export default function ReviewsSection() {
               </div>
               <span className="text-white font-bold text-lg">5.0</span>
               <span className="text-neutral-400 text-sm">
-                from 500+ businesses
+                {t("reviews.ratingSuffix")}
               </span>
             </motion.div>
           </motion.div>

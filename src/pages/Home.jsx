@@ -1,6 +1,7 @@
 // src/pages/Home.jsx
 import { Suspense, lazy } from "react";
 import HeroSection from "../components/sections/HeroSection";
+import Seo from "../components/Seo";
 
 // Below-the-fold sections are lazy-loaded to reduce initial bundle size
 const AboutSection = lazy(() => import("../components/sections/AboutSection"));
@@ -35,6 +36,8 @@ function SectionFallback() {
 export default function Home() {
   return (
     <main>
+      <Seo titleKey="seo.home.title" descriptionKey="seo.home.description" />
+
       {/* Hero loads eagerly — it's above the fold */}
       <HeroSection />
 

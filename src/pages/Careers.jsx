@@ -1,6 +1,7 @@
 // src/pages/Careers.jsx
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FaUsers,
   FaChartLine,
@@ -20,15 +21,18 @@ import {
   viewportOnce,
 } from "../animations/variants";
 import { scrollToSection } from "../hooks/useLenis";
+import Seo from "../components/Seo";
 
 // ── Data ──────────────────────────────────────────────────────────────────
-const DEPARTMENTS = [
-  "All",
-  "Engineering",
-  "Support",
-  "Sales",
-  "Operations",
-  "Security",
+// Keys map to careers.openRoles.departments.<key> in the locale files.
+// Job entries' `department` field should use one of these keys.
+const DEPARTMENT_KEYS = [
+  "all",
+  "engineering",
+  "support",
+  "sales",
+  "operations",
+  "security",
 ];
 
 const JOBS = [
@@ -166,42 +170,37 @@ const JOBS = [
   // },
 ];
 
-const BENEFITS = [
+const BENEFITS_META = [
+  { id: "culture", icon: <FaUsers />, image: "/assets/images/medical.webp" },
+  { id: "growth", icon: <FaChartLine />, image: "/assets/images/401k.webp" },
   {
-    icon: <FaUsers />,
-    title: "Collaborative Culture",
-    desc: "Work with talented professionals in a supportive, inclusive environment.",
-    image: "/assets/images/medical.webp",
-  },
-  {
-    icon: <FaChartLine />,
-    title: "Career Growth",
-    desc: "Clear advancement paths and opportunities to take on new challenges.",
-    image: "/assets/images/401k.webp",
-  },
-  {
+    id: "recognition",
     icon: <FaAward />,
-    title: "Recognition",
-    desc: "Your contributions are valued and rewarded through various recognition programs.",
     image: "/assets/images/flexible-work.webp",
   },
   {
+    id: "remote",
     icon: <FaLaptopHouse />,
-    title: "Remote Flexibility",
-    desc: "Work from anywhere with our flexible remote-first policies.",
     image: "/assets/images/growth.webp",
   },
 ];
 
 // ── Page ──────────────────────────────────────────────────────────────────
 export default function Careers() {
-  const [activeDept, setActiveDept] = useState("All");
+  const { t } = useTranslation();
+  const [activeDept, setActiveDept] = useState("all");
   const [search, setSearch] = useState("");
   const [selectedJob, setSelectedJob] = useState(null);
 
+  const BENEFITS = BENEFITS_META.map((b) => ({
+    ...b,
+    title: t(`careers.benefits.items.${b.id}.title`),
+    desc: t(`careers.benefits.items.${b.id}.desc`),
+  }));
+
   const filteredJobs = useMemo(() => {
     return JOBS.filter((job) => {
-      const deptMatch = activeDept === "All" || job.department === activeDept;
+      const deptMatch = activeDept === "all" || job.department === activeDept;
       const searchMatch =
         job.title.toLowerCase().includes(search.toLowerCase()) ||
         job.department.toLowerCase().includes(search.toLowerCase());
@@ -211,6 +210,11 @@ export default function Careers() {
 
   return (
     <main className="bg-dark-900">
+      <Seo
+        titleKey="seo.careers.title"
+        descriptionKey="seo.careers.description"
+      />
+
       {/* ── Hero ── */}
       <section className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[90vh] flex items-center">
         {/* Background image */}
@@ -245,7 +249,7 @@ export default function Careers() {
             >
               <FaBriefcase className="text-brand-blue text-sm" />
               <span className="eyebrow text-[11px]">
-                Careers at RightClicks
+                {t("careers.hero.eyebrow")}
               </span>
             </motion.div>
             <motion.h1
@@ -253,25 +257,25 @@ export default function Careers() {
               className="font-extrabold leading-[1.08] tracking-tight text-white mb-5"
               style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)" }}
             >
-              Build Your Career.
+              {t("careers.hero.headlineLine1")}
               <br />
-              Build Something{" "}
-              <span className="text-gradient-blue">That Matters.</span>
+              {t("careers.hero.headlineLine2")}{" "}
+              <span className="text-gradient-blue">
+                {t("careers.hero.headlineHighlight")}
+              </span>
             </motion.h1>
             <motion.p
               variants={fadeInUp}
               className="section-sub max-w-2xl mx-auto mb-10"
             >
-              Build the future of IT services with us. We're looking for
-              passionate professionals who want to make a difference in how
-              businesses leverage technology.
+              {t("careers.hero.paragraph")}
             </motion.p>
             <motion.div variants={fadeInUp}>
               <button
                 onClick={() => scrollToSection("open-roles")}
                 className="btn-primary"
               >
-                View Open Roles <FaArrowRight className="text-xs" />
+                {t("careers.hero.cta")} <FaArrowRight className="text-xs" />
               </button>
             </motion.div>
           </motion.div>
@@ -307,15 +311,17 @@ export default function Careers() {
             className="text-center mb-14"
           >
             <motion.p variants={fadeInUp} className="eyebrow mb-3">
-              Why Work Here
+              {t("careers.benefits.eyebrow")}
             </motion.p>
             <motion.h2 variants={fadeInUp} className="section-heading">
-              Benefits That Have{" "}
-              <span className="text-gradient-blue">Your Back</span>
+              {t("careers.benefits.headline")}{" "}
+              <span className="text-gradient-blue">
+                {t("careers.benefits.headlineHighlight")}
+              </span>
             </motion.h2>
           </motion.div>
 
-          <FannedBenefitCards />
+          <FannedBenefitCards benefits={BENEFITS} />
         </div>
       </section>
 
@@ -337,10 +343,13 @@ export default function Careers() {
             className="text-center mb-10"
           >
             <motion.p variants={fadeInUp} className="eyebrow mb-3">
-              Open Positions
+              {t("careers.openRoles.eyebrow")}
             </motion.p>
             <motion.h2 variants={fadeInUp} className="section-heading">
-              Find Your <span className="text-gradient-blue">Next Role</span>
+              {t("careers.openRoles.headline")}{" "}
+              <span className="text-gradient-blue">
+                {t("careers.openRoles.headlineHighlight")}
+              </span>
             </motion.h2>
           </motion.div>
 
@@ -353,14 +362,14 @@ export default function Careers() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search roles..."
+                placeholder={t("careers.openRoles.searchPlaceholder")}
                 className="w-full bg-dark-600 border border-dark-400/60 rounded-lg pl-11 pr-4 py-3 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:border-brand-blue/60 focus:ring-1 focus:ring-brand-blue/30 transition-all duration-200"
               />
             </div>
 
             {/* Department chips */}
             <div className="flex gap-2 overflow-x-auto no-scrollbar sm:flex-wrap">
-              {DEPARTMENTS.map((dept) => (
+              {DEPARTMENT_KEYS.map((dept) => (
                 <button
                   key={dept}
                   onClick={() => setActiveDept(dept)}
@@ -370,7 +379,7 @@ export default function Careers() {
                       : "bg-dark-600 text-neutral-300 border-dark-400/60 hover:border-brand-blue/40 hover:text-white"
                   }`}
                 >
-                  {dept}
+                  {t(`careers.openRoles.departments.${dept}`)}
                 </button>
               ))}
             </div>
@@ -399,7 +408,7 @@ export default function Careers() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-blue bg-brand-blue/10 border border-brand-blue/20 rounded-full px-2.5 py-1">
-                          {job.department}
+                          {t(`careers.openRoles.departments.${job.department}`)}
                         </span>
                         <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 bg-dark-600 border border-dark-400/50 rounded-full px-2.5 py-1">
                           {job.remote}
@@ -419,7 +428,8 @@ export default function Careers() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2 text-brand-blue text-sm font-semibold flex-shrink-0 group-hover:translate-x-1 transition-transform duration-200">
-                      View Details <FaArrowRight className="text-xs" />
+                      {t("careers.openRoles.viewDetails")}{" "}
+                      <FaArrowRight className="text-xs" />
                     </div>
                   </motion.div>
                 ))
@@ -430,10 +440,10 @@ export default function Careers() {
                   className="text-center py-16"
                 >
                   <p className="text-neutral-400 text-sm mb-2">
-                    No roles match your search right now.
+                    {t("careers.openRoles.noResults")}
                   </p>
                   <p className="text-neutral-500 text-xs">
-                    Don't see the right fit? Send your resume to{" "}
+                    {t("careers.openRoles.noResultsCta")}{" "}
                     <a
                       href="mailto:info@rightclicks.com"
                       className="text-brand-blue hover:underline"
@@ -475,18 +485,17 @@ export default function Careers() {
             viewport={viewportOnce}
           >
             <motion.h2 variants={fadeInUp} className="section-heading mb-4">
-              Don't See the Right Role?
+              {t("careers.cta.headline")}
             </motion.h2>
             <motion.p
               variants={fadeInUp}
               className="section-sub mb-8 max-w-md mx-auto"
             >
-              We're always looking for talented people. Send us your resume and
-              tell us how you'd like to contribute.
+              {t("careers.cta.paragraph")}
             </motion.p>
             <motion.div variants={fadeInUp}>
               <a href="mailto:info@rightclicks.com" className="btn-primary">
-                Email Your Resume <FaArrowRight className="text-xs" />
+                {t("careers.cta.button")} <FaArrowRight className="text-xs" />
               </a>
             </motion.div>
           </motion.div>
@@ -505,6 +514,8 @@ export default function Careers() {
 
 // ── Job detail modal ─────────────────────────────────────────────────────
 function JobModal({ job, onClose }) {
+  const { t } = useTranslation();
+
   useEffect(() => {
     const original = document.body.style.overflow;
 
@@ -535,7 +546,7 @@ function JobModal({ job, onClose }) {
       >
         <button
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("careers.modal.close")}
           className="absolute top-5 right-5 w-9 h-9 rounded-lg border border-dark-400/60 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-blue/50 transition-all duration-200"
         >
           <FaTimes className="text-sm" />
@@ -543,7 +554,7 @@ function JobModal({ job, onClose }) {
 
         <div className="flex items-center gap-2 mb-3">
           <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-blue bg-brand-blue/10 border border-brand-blue/20 rounded-full px-2.5 py-1">
-            {job.department}
+            {t(`careers.openRoles.departments.${job.department}`)}
           </span>
           <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 bg-dark-600 border border-dark-400/50 rounded-full px-2.5 py-1">
             {job.remote}
@@ -567,7 +578,7 @@ function JobModal({ job, onClose }) {
           {job.desc}
         </p>
         <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wider">
-          Responsibilities
+          {t("careers.modal.responsibilities")}
         </h3>
 
         <ul className="flex flex-col gap-2.5 mb-8">
@@ -601,7 +612,7 @@ function JobModal({ job, onClose }) {
         </ul>
 
         <h3 className="text-white font-semibold text-sm mb-3 uppercase tracking-wider">
-          What You'll Bring
+          {t("careers.modal.requirements")}
         </h3>
         <ul className="flex flex-col gap-2.5 mb-8">
           {job.requirements.map((req) => (
@@ -619,7 +630,7 @@ function JobModal({ job, onClose }) {
           href={`mailto:info@rightclicks.com?subject=Application: ${encodeURIComponent(job.title)}`}
           className="btn-primary w-full justify-center"
         >
-          Apply for This Role <FaArrowRight className="text-xs" />
+          {t("careers.modal.apply")} <FaArrowRight className="text-xs" />
         </a>
       </motion.div>
     </motion.div>
@@ -627,8 +638,8 @@ function JobModal({ job, onClose }) {
 }
 
 // ── Fanned Cards with Hover Effect (Why Work Here) ──────────────────────
-function FannedBenefitCards() {
-  const n = BENEFITS.length;
+function FannedBenefitCards({ benefits }) {
+  const n = benefits.length;
   const [width, setWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1200,
   );
@@ -651,9 +662,9 @@ function FannedBenefitCards() {
         viewport={viewportOnce}
         className="grid grid-cols-1 sm:grid-cols-2 gap-4"
       >
-        {BENEFITS.map((b) => (
+        {benefits.map((b) => (
           <motion.div
-            key={b.title}
+            key={b.id}
             variants={fadeInUp}
             className="relative rounded-2xl overflow-hidden border border-dark-400/60"
             style={{ height: "180px" }}
@@ -723,11 +734,11 @@ function FannedBenefitCards() {
           transition: "300ms ease-out",
         }}
       >
-        {BENEFITS.map((b, i) => {
+        {benefits.map((b, i) => {
           const rotate = i * step - spread / 2;
           return (
             <div
-              key={b.title}
+              key={b.id}
               className="fan-card"
               style={{ "--i": i, "--rot": `${rotate}deg` }}
             >

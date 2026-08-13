@@ -1,0 +1,330 @@
+{
+  "seo": {
+    "home": {
+      "title": "RightClicks — Gestion informatique pensée pour votre croissance.",
+      "description": "RightClicks propose des solutions informatiques entièrement gérées qui gardent votre entreprise sécurisée, productive et toujours en avance. Surveillance 24/7, cybersécurité, cloud et support expert."
+    },
+    "careers": {
+      "title": "Carrières — RightClicks",
+      "description": "Rejoignez RightClicks et aidez les entreprises à grandir grâce à la technologie. Découvrez nos postes ouverts en ingénierie, support, ventes, opérations et sécurité."
+    }
+  },
+  "navbar": {
+    "links": {
+      "home": "Accueil",
+      "about": "À propos",
+      "services": "Services",
+      "contact": "Contactez-nous",
+      "careers": "Carrières"
+    },
+    "chatWithUs": "Discutez avec nous",
+    "whatsapp": "WhatsApp",
+    "toggleMenu": "Basculer le menu",
+    "regions": {
+      "lk": {
+        "label": "Sri Lanka",
+        "message": "Bonjour RightClicks, j'aimerais en savoir plus sur vos services informatiques."
+      },
+      "ca": {
+        "label": "Canada",
+        "message": "Bonjour RightClicks, j'aimerais en savoir plus sur vos services informatiques."
+      }
+    },
+    "language": {
+      "en": "EN",
+      "fr": "FR",
+      "switchTo": "Passer en {{language}}"
+    }
+  },
+  "footer": {
+    "tagline": "RightClicks est un fournisseur de services informatiques gérés de premier plan, aidant les entreprises à rester sécurisées, productives et prêtes pour l'avenir.",
+    "servicesHeading": "Services",
+    "services": [
+      "Services informatiques gérés",
+      "Support technique",
+      "Conseil en informatique",
+      "Cybersécurité",
+      "Services cloud"
+    ],
+    "seeMore": "Voir plus",
+    "companyHeading": "Entreprise",
+    "company": {
+      "about": "À propos",
+      "why": "Pourquoi RightClicks",
+      "careers": "Carrières"
+    },
+    "supportHeading": "Assistance",
+    "support": {
+      "contact": "Contactez-nous",
+      "faq": "FAQ",
+      "resources": "Ressources"
+    },
+    "contactHeading": "Contactez-nous",
+    "regions": {
+      "lk": { "label": "Sri Lanka" },
+      "ca": { "label": "Canada" }
+    },
+    "copyright": "© {{year}} RightClicks. Tous droits réservés.",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfService": "Conditions d'utilisation"
+  },
+  "hero": {
+    "eyebrow": "Votre informatique. Notre priorité.",
+    "headlineLine1": "Gestion informatique.",
+    "headlineLine2": "Pensée pour la",
+    "headlineHighlight": "croissance.",
+    "description": "Optimiser votre infrastructure informatique est essentiel à la réussite de votre entreprise. Notre équipe gère tout, de l'installation à la maintenance, pour que vous restiez concentré sur vos projets et vos clients, sans interruption.",
+    "ctaPrimary": "Obtenir une consultation gratuite",
+    "ctaSecondary": "Découvrir nos services",
+    "stats": {
+      "uptime": "Disponibilité système",
+      "support": "Support expert",
+      "costs": "Coûts IT réduits"
+    },
+    "cards": {
+      "monitoring": { "title": "Surveillance 24/7", "sub": "Toujours actif. Toujours sécurisé." },
+      "cyber": { "title": "Cybersécurité", "sub": "Protéger ce qui compte." },
+      "cloud": { "title": "Solutions cloud", "sub": "Évolutives. Fiables. Sécurisées." },
+      "support": { "title": "Support informatique", "sub": "Rapide. Sympathique. Fiable." }
+    },
+    "scroll": "Défiler"
+  },
+  "about": {
+    "eyebrow": "À propos",
+    "headlineLine1": "Nous mettons la technologie",
+    "headlineLine2": "au service de",
+    "headlineHighlight": "votre entreprise",
+    "paragraph1": "Nous aidons les entreprises à tirer parti de la technologie pour croître, innover et rester compétitives dans un environnement numérique en constante évolution.",
+    "paragraph2": "Chez RightClicks, nous sommes une entreprise de services et de support informatique en pleine croissance, dédiée à fournir des solutions informatiques entièrement gérées, adaptées aux besoins uniques de votre entreprise. Avec une forte présence au Sri Lanka, aux Maldives et au Canada, nous offrons fièrement un support et des services partout dans le monde, gardant votre technologie fonctionnelle et sécurisée, où que vous soyez.",
+    "yearsBadge": {
+      "value": "2+",
+      "label": "ans",
+      "labelLine2": "d'expérience"
+    }
+  },
+  "whyChooseUs": {
+    "eyebrow": "Pourquoi nous choisir",
+    "headline": "Un support informatique qui va",
+    "headlineHighlight": "plus loin",
+    "learnMore": "En savoir plus",
+    "cards": {
+      "cost": {
+        "title": "Réduisez vos coûts IT de 40 %",
+        "desc": "Cessez de payer trop cher pour des réparations réactives, des systèmes obsolètes et des frais généraux inutiles. Notre approche de gestion informatique aide à rationaliser les opérations, optimiser l'infrastructure et offrir des coûts technologiques prévisibles, afin que vous puissiez investir davantage dans la croissance de votre entreprise."
+      },
+      "uptime": {
+        "title": "Disponibilité système à 99,9 %",
+        "desc": "Les temps d'arrêt coûtent du temps, de la productivité et des revenus. Grâce à une surveillance proactive, une maintenance préventive et un support à réponse rapide, nous maintenons vos systèmes stables, disponibles et performants lorsque votre entreprise en a le plus besoin."
+      },
+      "security": {
+        "title": "Sécurité et conformité renforcées",
+        "desc": "Restez protégé contre les cybermenaces en constante évolution tout en respectant les normes de l'industrie et les exigences de conformité. Nous mettons en place des stratégies de sécurité à plusieurs niveaux, une surveillance continue et les meilleures pratiques pour protéger vos données et vos opérations."
+      },
+      "support": {
+        "title": "Support expert 24/7",
+        "desc": "Les problèmes technologiques ne respectent pas les heures de bureau, et nous non plus. Notre équipe de support expert est disponible en tout temps pour résoudre rapidement les problèmes, minimiser les interruptions et garantir la productivité de votre équipe."
+      },
+      "scalable": {
+        "title": "Solutions évolutives",
+        "desc": "Votre technologie devrait soutenir votre croissance, pas la limiter. Nous concevons des environnements informatiques flexibles et évolutifs qui s'adaptent aux besoins changeants de votre entreprise, rendant l'expansion plus fluide et plus efficace."
+      },
+      "planning": {
+        "title": "Planification technologique stratégique",
+        "desc": "Prenez des décisions technologiques plus intelligentes grâce à une stratégie à long terme. Nous travaillons en étroite collaboration avec votre entreprise pour aligner les investissements informatiques sur vos objectifs, améliorer l'efficacité, réduire les risques et créer une feuille de route pour la croissance future."
+      }
+    }
+  },
+  "process": {
+    "eyebrow": "Notre processus",
+    "headline": "Un processus éprouvé. Des résultats",
+    "headlineHighlight": "transparents.",
+    "steps": {
+      "discover": { "title": "Découvrir", "desc": "Nous apprenons à connaître votre entreprise et vos objectifs." },
+      "plan": { "title": "Planifier", "desc": "Nous concevons une stratégie informatique sur mesure pour vous." },
+      "deploy": { "title": "Déployer", "desc": "Nous mettons en œuvre la solution avec un minimum de perturbations." },
+      "manage": { "title": "Gérer", "desc": "Nous surveillons et soutenons votre informatique de façon proactive." },
+      "optimize": { "title": "Optimiser", "desc": "Nous améliorons continuellement et évoluons avec votre croissance." }
+    }
+  },
+  "services": {
+    "eyebrow": "Nos services",
+    "headline": "Des solutions informatiques",
+    "headlineHighlight": "complètes",
+    "paragraph1": "De la surveillance proactive au conseil stratégique, RightClicks offre une gamme complète de services informatiques gérés conçus pour garder votre entreprise sécurisée, efficace et prête à évoluer.",
+    "paragraph2": "Chaque service est soutenu par notre équipe d'experts et un engagement envers un support rapide, transparent et fiable, afin que vous puissiez vous concentrer sur la croissance pendant que nous gérons votre technologie.",
+    "cta": "Obtenir une consultation gratuite",
+    "items": {
+      "managedIt": {
+        "title": "Services informatiques gérés",
+        "desc": "En tant que fier partenaire de FullyManagedIT.com, nos services informatiques gérés éliminent les tracas de la gestion technologique. De la maintenance proactive au support expert, nous veillons à ce que votre infrastructure informatique fonctionne sans accroc, vous permettant de vous concentrer sur la croissance de votre entreprise sans interruptions."
+      },
+      "helpDesk": {
+        "title": "Support technique — 24/7 (À distance / Sur site)",
+        "desc": "Notre support technique offre une assistance rapide et fiable pour garder votre technologie performante, en minimisant les temps d'arrêt et en veillant à ce que votre entreprise reste sur la bonne voie en tout temps."
+      },
+      "consulting": {
+        "title": "Conseil en informatique — Un accompagnement sur mesure pour faire avancer votre entreprise",
+        "desc": "Nous offrons des conseils experts en informatique et une orientation stratégique pour aligner votre technologie sur vos objectifs d'affaires, garantissant une efficacité, une innovation et une croissance maximales à long terme."
+      },
+      "cloudMigration": {
+        "title": "Gestion de serveurs et migrations vers le cloud",
+        "desc": "La migration vers le cloud peut sembler intimidante, mais avec notre aide experte, nous assurons une transition fluide de vos processus, applications ou infrastructures clés. Exploitez tout le potentiel du cloud pour accroître votre efficacité et stimuler la croissance de votre entreprise."
+      },
+      "virtualManager": {
+        "title": "Gestionnaire informatique virtuel",
+        "desc": "Propulsez votre entreprise grâce à notre service de gestionnaire informatique virtuel. Bénéficiez de l'accès à un leader informatique expérimenté qui rationalise vos opérations et gère toutes les tâches de gestion informatique. En utilisant la certification ISO 20000 et le cadre ITIL, nous optimisons vos systèmes pour la sécurité, la rentabilité et la performance, afin que vous puissiez vous concentrer sur la croissance de votre entreprise."
+      },
+      "securityAssessments": {
+        "title": "Évaluations de cybersécurité",
+        "desc": "Identifiez les vulnérabilités avant qu'elles ne soient exploitées. Nos évaluations de cybersécurité complètes examinent en profondeur vos systèmes, repèrent les faiblesses et simulent des cyberattaques potentielles afin de renforcer vos défenses et votre résilience face aux cybermenaces."
+      },
+      "training": {
+        "title": "Formation des employés et conformité",
+        "desc": "Dotez votre équipe des compétences informatiques les plus récentes et assurez le respect des réglementations de l'industrie grâce à des programmes de formation ciblés conçus pour renforcer votre effectif et maintenir les normes de conformité."
+      },
+      "networkMonitoring": {
+        "title": "Surveillance du réseau et cybersécurité",
+        "desc": "Protégez votre entreprise contre l'évolution des cybermenaces grâce à une surveillance proactive et une gestion de sécurité complète. Nous protégeons continuellement votre réseau pour assurer l'intégrité des données et la continuité des affaires."
+      },
+      "cloudServices": {
+        "title": "Services cloud et gestion des données",
+        "desc": "Exploitez la puissance de l'informatique en nuage grâce à des solutions de migration, de gestion et de reprise après sinistre transparentes. Libérez la flexibilité et l'évolutivité pour accélérer la réussite de votre entreprise."
+      },
+      "aiAnalyst": {
+        "title": "Analyste d'affaires assisté par l'IA",
+        "desc": "Obtenez des informations exploitables et améliorez la prise de décision grâce à l'analytique d'affaires alimentée par l'IA. Transformez les données brutes en intelligence stratégique pour stimuler la croissance et l'efficacité."
+      },
+      "automation": {
+        "title": "Automatisation des processus d'affaires",
+        "desc": "Rationalisez vos opérations en automatisant les tâches répétitives, en réduisant les erreurs et en gagnant du temps. Augmentez la productivité et concentrez-vous sur les activités d'affaires à forte valeur ajoutée."
+      },
+      "customApps": {
+        "title": "Applications web et mobiles sur mesure",
+        "desc": "Développez des applications web et mobiles adaptées aux besoins uniques de votre entreprise et améliorez l'expérience utilisateur grâce à des solutions évolutives, sécurisées et modernes."
+      }
+    }
+  },
+  "reviews": {
+    "eyebrow": "Avis",
+    "headline": "De vrais partenaires. De vrais",
+    "headlineHighlight": "résultats.",
+    "sideEyebrow": "Ce que disent nos clients",
+    "sideHeadline": "La confiance d'entreprises de",
+    "sideHeadlineHighlight": "tous les secteurs.",
+    "paragraph": "De la santé à la fabrication, RightClicks accompagne des entreprises en croissance pour garder leur technologie sécurisée, fiable et prête pour l'avenir.",
+    "ratingSuffix": "de plus de 500 entreprises",
+    "items": {
+      "jason": {
+        "quote": "RightClicks a joué un rôle déterminant pour garder nos systèmes sécurisés et notre équipe productive. Leur temps de réponse est inégalé.",
+        "name": "Jason M.",
+        "role": "Directeur informatique, Santé"
+      },
+      "melissa": {
+        "quote": "Leur approche proactive de la gestion informatique nous a fait économiser des milliers de dollars en temps d'arrêt et en coûts imprévus. Je le recommande vivement !",
+        "name": "Melissa R.",
+        "role": "Directrice des opérations"
+      },
+      "david": {
+        "quote": "RightClicks fait figure de prolongement de notre équipe. Fiables, compétents et toujours un pas en avance.",
+        "name": "David T.",
+        "role": "PDG, Industrie manufacturière"
+      },
+      "angela": {
+        "quote": "Passer à RightClicks a été la meilleure décision informatique que nous ayons prise. Notre infrastructure n'a jamais été aussi stable et sécurisée.",
+        "name": "Angela P.",
+        "role": "Directrice financière, Commerce de détail"
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contactez-nous",
+    "headlineLine1": "Bâtissons une infrastructure",
+    "headlineLine2": "informatique plus",
+    "headlineHighlight": "sécurisée",
+    "headlineLine2Suffix": "et plus solide",
+    "paragraph": "Prêt à discuter de vos besoins informatiques ? Contactez notre équipe d'experts dès aujourd'hui. Nous sommes là pour vous aider à trouver les solutions technologiques parfaites pour votre entreprise.",
+    "highlights": {
+      "fastResponse": { "title": "Réponse rapide", "subtitle": "Nous répondons sous 24 heures" },
+      "secureConsultation": { "title": "Consultation sécurisée", "subtitle": "Vos données et votre confidentialité sont notre priorité" },
+      "globalSupport": { "title": "Support international", "subtitle": "Au service de clients partout dans le monde" }
+    },
+    "form": {
+      "namePlaceholder": "Votre nom",
+      "emailPlaceholder": "Votre courriel",
+      "phonePlaceholder": "Votre téléphone",
+      "companyPlaceholder": "Nom de l'entreprise",
+      "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+      "sendButton": "Envoyer le message",
+      "submitted": "WhatsApp est ouvert — il ne reste qu'à envoyer pour joindre notre équipe."
+    },
+    "divider": "Ou contactez-nous directement",
+    "callUs": "Appelez-nous",
+    "emailUs": "Écrivez-nous",
+    "whatsappMessage": {
+      "inquiry": "Nouvelle demande depuis le site web",
+      "name": "Nom",
+      "email": "Courriel",
+      "phone": "Téléphone",
+      "company": "Entreprise",
+      "message": "Message"
+    },
+    "regions": {
+      "lk": { "label": "Sri Lanka" },
+      "ca": { "label": "Canada" }
+    },
+    "regionModal": {
+      "title": "Choisissez une région",
+      "subtitle": "Nous ouvrirons WhatsApp avec votre message prêt à envoyer.",
+      "close": "Fermer"
+    }
+  },
+  "careers": {
+    "hero": {
+      "eyebrow": "Carrières chez RightClicks",
+      "headlineLine1": "Bâtissez votre carrière.",
+      "headlineLine2": "Bâtissez quelque chose",
+      "headlineHighlight": "qui compte.",
+      "paragraph": "Bâtissez avec nous l'avenir des services informatiques. Nous recherchons des professionnels passionnés qui veulent faire une différence dans la façon dont les entreprises exploitent la technologie.",
+      "cta": "Voir les postes ouverts"
+    },
+    "benefits": {
+      "eyebrow": "Pourquoi travailler ici",
+      "headline": "Des avantages qui vous",
+      "headlineHighlight": "soutiennent",
+      "items": {
+        "culture": { "title": "Culture collaborative", "desc": "Travaillez avec des professionnels talentueux dans un environnement inclusif et bienveillant." },
+        "growth": { "title": "Évolution de carrière", "desc": "Des parcours d'avancement clairs et des occasions de relever de nouveaux défis." },
+        "recognition": { "title": "Reconnaissance", "desc": "Vos contributions sont valorisées et récompensées grâce à divers programmes de reconnaissance." },
+        "remote": { "title": "Flexibilité du télétravail", "desc": "Travaillez de partout grâce à nos politiques flexibles axées sur le télétravail." }
+      }
+    },
+    "openRoles": {
+      "eyebrow": "Postes ouverts",
+      "headline": "Trouvez votre",
+      "headlineHighlight": "prochain rôle",
+      "searchPlaceholder": "Rechercher un poste...",
+      "departments": {
+        "all": "Tous",
+        "engineering": "Ingénierie",
+        "support": "Support",
+        "sales": "Ventes",
+        "operations": "Opérations",
+        "security": "Sécurité"
+      },
+      "viewDetails": "Voir les détails",
+      "noResults": "Aucun poste ne correspond à votre recherche pour le moment.",
+      "noResultsCta": "Vous ne trouvez pas le poste idéal ? Envoyez votre CV à"
+    },
+    "cta": {
+      "headline": "Vous ne voyez pas le bon poste ?",
+      "paragraph": "Nous sommes toujours à la recherche de personnes talentueuses. Envoyez-nous votre CV et dites-nous comment vous aimeriez contribuer.",
+      "button": "Envoyer votre CV par courriel"
+    },
+    "modal": {
+      "close": "Fermer",
+      "responsibilities": "Responsabilités",
+      "requirements": "Ce que vous apporterez",
+      "apply": "Postuler pour ce rôle"
+    }
+  }
+}

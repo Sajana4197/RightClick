@@ -1,6 +1,7 @@
 // src/components/sections/HeroSection.jsx
 import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   FaArrowRight,
   FaShieldAlt,
@@ -14,12 +15,10 @@ import { BsArrowDownCircle } from "react-icons/bs";
 import { scrollToSection } from "../../hooks/useLenis";
 import { fadeInUp, staggerContainer } from "../../animations/variants";
 
-const CARDS = [
+const CARD_META = [
   {
     id: "monitoring",
     icon: <MdMonitor className="text-brand-blue text-lg" />,
-    title: "24/7 Monitoring",
-    sub: "Always On. Always Secure.",
     position: "top-[8%] right-[8%]",
     delay: 0.5,
     floatDur: "5s",
@@ -27,8 +26,6 @@ const CARDS = [
   {
     id: "cyber",
     icon: <FaShieldAlt className="text-brand-blue text-lg" />,
-    title: "Cyber Security",
-    sub: "Protecting What Matters.",
     position: "top-[32%] right-[2%]",
     delay: 0.7,
     floatDur: "6s",
@@ -36,8 +33,6 @@ const CARDS = [
   {
     id: "cloud",
     icon: <FaCloud className="text-brand-blue text-lg" />,
-    title: "Cloud Solutions",
-    sub: "Scalable. Reliable. Secure.",
     position: "bottom-[28%] right-[4%]",
     delay: 0.9,
     floatDur: "5.5s",
@@ -45,19 +40,17 @@ const CARDS = [
   {
     id: "support",
     icon: <FaHeadset className="text-brand-blue text-lg" />,
-    title: "IT Support",
-    sub: "Fast. Friendly. Reliable.",
     position: "bottom-[6%] right-[14%]",
     delay: 1.1,
     floatDur: "4.8s",
   },
 ];
 
-const STATS = [
-  { icon: <FaShieldAlt />, value: "99.9%", label: "System Uptime" },
-  { icon: <FaHeadset />, value: "24/7", label: "Expert Support" },
-  { icon: <FaChartLine />, value: "40%", label: "Lower IT Costs" },
-  // { icon: <HiStar />, value: "500+", label: "Businesses Trust Us" },
+const STAT_META = [
+  { id: "uptime", icon: <FaShieldAlt />, value: "99.9%" },
+  { id: "support", icon: <FaHeadset />, value: "24/7" },
+  { id: "costs", icon: <FaChartLine />, value: "40%" },
+  // { id: "trust", icon: <HiStar />, value: "500+" },
 ];
 
 function FloatingCard({ card }) {
@@ -96,6 +89,19 @@ function FloatingCard({ card }) {
 }
 
 export default function HeroSection() {
+  const { t } = useTranslation();
+
+  const CARDS = CARD_META.map((c) => ({
+    ...c,
+    title: t(`hero.cards.${c.id}.title`),
+    sub: t(`hero.cards.${c.id}.sub`),
+  }));
+
+  const STATS = STAT_META.map((s) => ({
+    ...s,
+    label: t(`hero.stats.${s.id}`),
+  }));
+
   return (
     <section
       id="home"
@@ -166,9 +172,7 @@ pt-0
               className="flex items-center gap-2 mb-5"
             >
               <HiStar className="text-brand-blue text-xs" />
-              <span className="eyebrow text-[11px]">
-                Your IT. Our Priority.
-              </span>
+              <span className="eyebrow text-[11px]">{t("hero.eyebrow")}</span>
             </motion.div>
 
             <motion.h1
@@ -176,20 +180,19 @@ pt-0
               className="font-extrabold leading-[1.06] tracking-tight text-white mb-4"
               style={{ fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)" }}
             >
-              Managed IT.
+              {t("hero.headlineLine1")}
               <br />
-              Built for <span className="text-gradient-blue">Growth.</span>
+              {t("hero.headlineLine2")}{" "}
+              <span className="text-gradient-blue">
+                {t("hero.headlineHighlight")}
+              </span>
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
               className="text-neutral-300 text-base lg:text-lg leading-relaxed max-w-[440px] mb-8"
             >
-              Optimizing your IT infrastructure is essential for business
-              success. Our team handles everything from setup to maintenance,
-              allowing you to focus on projects, operations, and customer
-              satisfaction. We’ll ensure that your tech environment runs
-              smoothly, with minimal disruptions to your day-to-day operations.
+              {t("hero.description")}
             </motion.p>
 
             <motion.div
@@ -200,14 +203,14 @@ pt-0
                 onClick={() => scrollToSection("contact")}
                 className="btn-primary"
               >
-                Get a Free Consultation
+                {t("hero.ctaPrimary")}
                 <FaArrowRight className="text-xs" />
               </button>
               <button
                 onClick={() => scrollToSection("services")}
                 className="btn-ghost"
               >
-                Explore Services
+                {t("hero.ctaSecondary")}
                 <FaArrowRight className="text-xs" />
               </button>
             </motion.div>
@@ -220,7 +223,7 @@ pt-0
             >
               {STATS.map((s) => (
                 <motion.div
-                  key={s.label}
+                  key={s.id}
                   variants={fadeInUp}
                   className="flex flex-col"
                 >
@@ -285,7 +288,7 @@ pt-0
         className="absolute bottom-8 right-8 hidden lg:flex flex-col items-center gap-2 text-neutral-500 hover:text-brand-blue transition-colors duration-300"
       >
         <span className="text-[10px] tracking-[0.2em] uppercase font-medium">
-          Scroll
+          {t("hero.scroll")}
         </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}

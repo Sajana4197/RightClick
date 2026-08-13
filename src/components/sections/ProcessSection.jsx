@@ -1,6 +1,7 @@
 // src/components/sections/ProcessSection.jsx
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -18,37 +19,12 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STEPS = [
-  {
-    num: "01",
-    icon: <FaSearch />,
-    title: "Discover",
-    desc: "We learn about your business and goals.",
-  },
-  {
-    num: "02",
-    icon: <FaClipboardList />,
-    title: "Plan",
-    desc: "We design a custom IT strategy for you.",
-  },
-  {
-    num: "03",
-    icon: <FaRocket />,
-    title: "Deploy",
-    desc: "We implement with minimum disruption.",
-  },
-  {
-    num: "04",
-    icon: <FaCog />,
-    title: "Manage",
-    desc: "We proactively monitor and support your IT.",
-  },
-  {
-    num: "05",
-    icon: <FaChartLine />,
-    title: "Optimize",
-    desc: "We continuously improve and scale as you grow.",
-  },
+const STEPS_META = [
+  { num: "01", id: "discover", icon: <FaSearch /> },
+  { num: "02", id: "plan", icon: <FaClipboardList /> },
+  { num: "03", id: "deploy", icon: <FaRocket /> },
+  { num: "04", id: "manage", icon: <FaCog /> },
+  { num: "05", id: "optimize", icon: <FaChartLine /> },
 ];
 
 const CIRCLE_SIZE = 88; // px — diameter of each circle
@@ -150,8 +126,15 @@ function StepNode({ step, index, total }) {
 }
 
 export default function ProcessSection() {
+  const { t } = useTranslation();
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
+
+  const STEPS = STEPS_META.map((s) => ({
+    ...s,
+    title: t(`process.steps.${s.id}.title`),
+    desc: t(`process.steps.${s.id}.desc`),
+  }));
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -202,11 +185,13 @@ export default function ProcessSection() {
           className="text-center mb-16"
         >
           <motion.p variants={fadeInUp} className="eyebrow mb-3">
-            Our Process
+            {t("process.eyebrow")}
           </motion.p>
           <motion.h2 variants={fadeInUp} className="section-heading">
-            A Proven Process. Transparent{" "}
-            <span className="text-gradient-blue">Results.</span>
+            {t("process.headline")}{" "}
+            <span className="text-gradient-blue">
+              {t("process.headlineHighlight")}
+            </span>
           </motion.h2>
         </motion.div>
 

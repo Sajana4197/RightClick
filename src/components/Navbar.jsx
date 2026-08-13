@@ -2,29 +2,18 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { FaWhatsapp, FaChevronDown } from "react-icons/fa";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { useScrolled } from "../hooks/useScrolled";
 import { scrollToSection, scrollToTop } from "../hooks/useLenis";
+import useLangRoute, { stripLangPrefix } from "../hooks/useLangRoute";
 
 // Two regional WhatsApp numbers — keep in sync with ContactSection.jsx / Footer.jsx
-const REGIONS = [
-  {
-    id: "lk",
-    label: "Sri Lanka",
-    phoneDisplay: "+94 77 297 5000",
-    whatsapp: "94772975000",
-    defaultMessage:
-      "Hi RightClicks, I'd like to know more about your IT services.",
-  },
-  {
-    id: "ca",
-    label: "Canada",
-    phoneDisplay: "+1 (250) 885-5678",
-    whatsapp: "12508855678",
-    defaultMessage:
-      "Hi RightClicks, I'd like to know more about your IT services.",
-  },
+// (label/message come from translations; only the routing data lives here)
+const REGION_META = [
+  { id: "lk", phoneDisplay: "+94 77 297 5000", whatsapp: "94772975000" },
+  { id: "ca", phoneDisplay: "+1 (250) 885-5678", whatsapp: "12508855678" },
 ];
 
 function whatsappHref(region) {
@@ -32,12 +21,12 @@ function whatsappHref(region) {
 }
 
 const NAV_LINKS = [
-  { label: "Home", id: "home" },
-  { label: "About Us", id: "about" },
-  { label: "Services", id: "services" },
-  // { label: "Reviews", id: "reviews" },
-  { label: "Contact Us", id: "contact" },
-  { label: "Careers", path: "/careers" },
+  { key: "home", id: "home" },
+  { key: "about", id: "about" },
+  { key: "services", id: "services" },
+  // { key: "reviews", id: "reviews" },
+  { key: "contact", id: "contact" },
+  { key: "careers", path: "/careers" },
 ];
 
 // Section ids tracked for scroll-spy (in document order)
@@ -52,13 +41,22 @@ const SECTION_IDS = [
 ];
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const scrolled = useScrolled(20);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [callMenuOpen, setCallMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const navigate = useNavigate();
   const location = useLocation();
+  const { lang, buildPath, switchLang } = useLangRoute();
+  const canonicalPath = stripLangPrefix(location.pathname);
   const callMenuRef = useRef(null);
+
+  const REGIONS = REGION_META.map((r) => ({
+    ...r,
+    label: t(`navbar.regions.${r.id}.label`),
+    defaultMessage: t(`navbar.regions.${r.id}.message`),
+  }));
 
   // Close the call dropdown when clicking outside it
   useEffect(() => {
@@ -74,7 +72,7 @@ export default function Navbar() {
 
   // Scroll-spy — highlight the nav link for the section currently in view
   useEffect(() => {
-    if (location.pathname !== "/") return;
+    if (canonicalPath !== "/") return;
 
     let observer;
     let retryTimeout;
@@ -123,14 +121,14 @@ export default function Navbar() {
 
     // Route-based link (e.g. Careers page)
     if (link.path) {
-      navigate(link.path);
+      navigate(buildPath(link.path));
       return;
     }
 
     // Home section — scroll to top
     if (link.id === "home") {
-      if (location.pathname !== "/") {
-        navigate("/", {
+      if (canonicalPath !== "/") {
+        navigate(buildPath("/"), {
           state: {
             scrollTop: true,
           },
@@ -142,8 +140,8 @@ export default function Navbar() {
       return;
     }
     // Other section-based links — navigate home first if on another page
-    if (location.pathname !== "/") {
-      navigate("/");
+    if (canonicalPath !== "/") {
+      navigate(buildPath("/"));
       setTimeout(() => scrollToSection(link.id), 300);
     } else {
       scrollToSection(link.id);
@@ -152,8 +150,8 @@ export default function Navbar() {
 
   // Determine if a link should appear "active"
   const isActive = (link) => {
-    if (link.path) return location.pathname === link.path;
-    if (location.pathname !== "/") return false;
+    if (link.path) return canonicalPath === link.path;
+    if (canonicalPath !== "/") return false;
     // "Why Choose Us" and "Process" sections fall under the "About Us" / "Services" nav items visually,
     // but we map them to the nearest nav link for highlighting purposes
     if (
@@ -206,7 +204,7 @@ export default function Navbar() {
               const active = isActive(link);
               return (
                 <button
-                  key={link.label}
+                  key={link.key}
                   onClick={() => handleNav(link)}
                   className={`relative px-3.5 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                     active ? "text-white" : "text-neutral-300 hover:text-white"
@@ -220,7 +218,9 @@ export default function Navbar() {
                         : "bg-transparent border border-transparent hover:bg-white/[0.06] hover:border-white/10"
                     }`}
                   />
-                  <span className="relative z-10">{link.label}</span>
+                  <span className="relative z-10">
+                    {t(`navbar.links.${link.key}`)}
+                  </span>
                   {/* Active underline indicator */}
                   {active && (
                     <motion.span
@@ -242,6 +242,27 @@ export default function Navbar() {
             })}
           </nav>
 
+          {/* EN/FR language switcher */}
+          <div className="hidden lg:flex items-center gap-1 mr-2 border border-dark-400/60 rounded-md p-0.5">
+            {["en", "fr"].map((code) => (
+              <button
+                key={code}
+                onClick={() => switchLang(code)}
+                aria-label={t("navbar.language.switchTo", {
+                  language: t(`navbar.language.${code}`),
+                })}
+                aria-pressed={lang === code}
+                className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors duration-200 ${
+                  lang === code
+                    ? "bg-brand-blue text-white"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+              >
+                {t(`navbar.language.${code}`)}
+              </button>
+            ))}
+          </div>
+
           {/* CTA button — WhatsApp region picker */}
           <div
             className="hidden lg:flex items-center relative"
@@ -254,9 +275,11 @@ export default function Navbar() {
               <FaWhatsapp className="text-sm" />
               <div className="flex flex-col leading-none">
                 <span className="text-[9px] font-normal opacity-80">
-                  Chat with Us
+                  {t("navbar.chatWithUs")}
                 </span>
-                <span className="text-xs font-bold">WhatsApp</span>
+                <span className="text-xs font-bold">
+                  {t("navbar.whatsapp")}
+                </span>
               </div>
               <FaChevronDown
                 className={`text-[10px] ml-1 transition-transform duration-200 ${callMenuOpen ? "rotate-180" : ""}`}
@@ -303,7 +326,7 @@ export default function Navbar() {
           <button
             className="lg:hidden text-white p-2 focus:outline-none"
             onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={t("navbar.toggleMenu")}
           >
             {mobileOpen ? <HiX size={24} /> : <HiMenuAlt3 size={24} />}
           </button>
@@ -325,7 +348,7 @@ export default function Navbar() {
                 const active = isActive(link);
                 return (
                   <button
-                    key={link.label}
+                    key={link.key}
                     onClick={() => handleNav(link)}
                     className={`text-left px-4 py-3 rounded-lg transition-colors duration-200 text-sm font-medium flex items-center justify-between ${
                       active
@@ -333,13 +356,38 @@ export default function Navbar() {
                         : "text-neutral-200 hover:text-white hover:bg-dark-600 border border-transparent"
                     }`}
                   >
-                    {link.label}
+                    {t(`navbar.links.${link.key}`)}
                     {active && (
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
                     )}
                   </button>
                 );
               })}
+
+              {/* EN/FR language switcher */}
+              <div className="flex items-center gap-1 mt-2 border border-dark-400/60 rounded-md p-0.5 w-fit">
+                {["en", "fr"].map((code) => (
+                  <button
+                    key={code}
+                    onClick={() => {
+                      setMobileOpen(false);
+                      switchLang(code);
+                    }}
+                    aria-label={t("navbar.language.switchTo", {
+                      language: t(`navbar.language.${code}`),
+                    })}
+                    aria-pressed={lang === code}
+                    className={`px-3 py-1.5 rounded text-xs font-semibold transition-colors duration-200 ${
+                      lang === code
+                        ? "bg-brand-blue text-white"
+                        : "text-neutral-400 hover:text-white"
+                    }`}
+                  >
+                    {t(`navbar.language.${code}`)}
+                  </button>
+                ))}
+              </div>
+
               <div className="flex flex-col gap-2 mt-2">
                 {REGIONS.map((r) => (
                   <a
