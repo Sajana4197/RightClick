@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(node -e \"require\\('./src/locales/en.json'\\); require\\('./src/locales/fr.json'\\); console.log\\('OK'\\);\")"
+    ]
+  }
+}

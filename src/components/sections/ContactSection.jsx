@@ -6,8 +6,6 @@ import {
   FaPhone,
   FaEnvelope,
   FaPaperPlane,
-  FaWhatsapp,
-  FaTimes,
   FaUser,
   FaBuilding,
   FaCommentDots,
@@ -24,22 +22,12 @@ import {
 } from "../../animations/variants";
 import SendButton from "../SendButton";
 
-// Two regional numbers — used for both "Call Us" display and WhatsApp routing
-// (label/message come from translations; only the routing data lives here)
-const REGION_META = [
-  {
-    id: "lk",
-    phoneDisplay: "+94 77 297 5000",
-    phoneTel: "+94772975000",
-    whatsapp: "94772975000",
-  },
-  {
-    id: "ca",
-    phoneDisplay: "+1 (250) 885-5678",
-    phoneTel: "+12508855678",
-    whatsapp: "12508855678",
-  },
-];
+// Single WhatsApp/phone contact (Canada) — keep in sync with Navbar.jsx / Footer.jsx
+const CONTACT = {
+  phoneDisplay: "+1 (250) 885-5678",
+  phoneTel: "+12508855678",
+  whatsapp: "12508855678",
+};
 
 // Email address is not translated
 const CONTACT_INFO_META = [
@@ -59,11 +47,6 @@ const HIGHLIGHTS_META = [
 
 export default function ContactSection() {
   const { t } = useTranslation();
-  const REGIONS = REGION_META.map((r) => ({
-    ...r,
-    label: t(`contact.regions.${r.id}.label`),
-    defaultMessage: t(`navbar.regions.${r.id}.message`),
-  }));
   const CONTACT_INFO_STATIC = CONTACT_INFO_META.map((c) => ({
     ...c,
     label: t("contact.emailUs"),
@@ -81,7 +64,6 @@ export default function ContactSection() {
     company: "",
     message: "",
   });
-  const [showRegionPicker, setShowRegionPicker] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -91,13 +73,6 @@ export default function ContactSection() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Basic native validation already runs via required attrs on inputs.
-    // Show the region picker so the visitor chooses where to send the message.
-    setShowRegionPicker(true);
-  };
-
-  const sendToRegion = (regionId) => {
-    const selectedRegion = REGIONS.find((r) => r.id === regionId) || REGIONS[0];
-
     const lines = [
       t("contact.whatsappMessage.inquiry"),
       `${t("contact.whatsappMessage.name")}: ${form.name}`,
@@ -112,11 +87,10 @@ export default function ContactSection() {
     ].filter(Boolean);
 
     const text = encodeURIComponent(lines.join("\n"));
-    const whatsappUrl = `https://wa.me/${selectedRegion.whatsapp}?text=${text}`;
+    const whatsappUrl = `https://wa.me/${CONTACT.whatsapp}?text=${text}`;
 
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
-    setShowRegionPicker(false);
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
     setForm({ name: "", email: "", phone: "", company: "", message: "" });
@@ -339,7 +313,7 @@ export default function ContactSection() {
 
             {/* Contact info row */}
             <div className="grid sm:grid-cols-2 gap-6 text-center">
-              {/* Call Us — both regional numbers */}
+              {/* Call Us */}
               <div className="flex flex-col items-center px-2 sm:border-r sm:border-dark-400/40 group">
                 <div className="w-12 h-12 rounded-xl bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-lg mb-3 group-hover:bg-brand-blue/20 group-hover:shadow-blue-glow-sm transition-all duration-300">
                   <FaPhone />
@@ -347,25 +321,14 @@ export default function ContactSection() {
                 <p className="text-brand-blue text-xs font-semibold uppercase tracking-wider mb-2">
                   {t("contact.callUs")}
                 </p>
-                <div className="flex flex-col items-center gap-1.5">
-                  {REGIONS.map((r) => (
-                    <a
-                      key={r.id}
-                      href={`https://wa.me/${r.whatsapp}?text=${encodeURIComponent(r.defaultMessage)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:translate-x-1 transition-all duration-300"
-                    >
-                      <span className="text-white font-semibold text-sm hover:text-brand-blue-light transition-colors duration-300S">
-                        {r.phoneDisplay}
-                      </span>
-
-                      <span className="text-neutral-500 text-xs font-normal transition-colors duration-300S">
-                        ({r.label})
-                      </span>
-                    </a>
-                  ))}
-                </div>
+                <a
+                  href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(t("navbar.whatsappMessage"))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white font-semibold text-sm hover:text-brand-blue-light transition-colors duration-300"
+                >
+                  {CONTACT.phoneDisplay}
+                </a>
               </div>
 
               {/* Email */}
@@ -392,66 +355,6 @@ export default function ContactSection() {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Region picker modal — appears after Send is clicked */}
-      <AnimatePresence>
-        {showRegionPicker && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-            style={{ background: "rgba(5,10,20,0.75)" }}
-            onClick={() => setShowRegionPicker(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.96 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="glass-card w-full max-w-sm p-6 sm:p-7 relative"
-            >
-              <button
-                onClick={() => setShowRegionPicker(false)}
-                aria-label={t("contact.regionModal.close")}
-                className="absolute top-4 right-4 w-8 h-8 rounded-lg border border-dark-400/60 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-blue/50 transition-all duration-200"
-              >
-                <FaTimes className="text-sm" />
-              </button>
-
-              <h3 className="text-white font-bold text-lg mb-1.5">
-                {t("contact.regionModal.title")}
-              </h3>
-              <p className="text-neutral-400 text-sm mb-6">
-                {t("contact.regionModal.subtitle")}
-              </p>
-
-              <div className="flex flex-col gap-3">
-                {REGIONS.map((r) => (
-                  <button
-                    key={r.id}
-                    onClick={() => sendToRegion(r.id)}
-                    className="flex items-center gap-3 w-full bg-dark-600 border border-dark-400/60 rounded-lg px-4 py-3.5 text-left hover:border-brand-blue/50 hover:bg-dark-500 transition-all duration-200 group"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-brand-blue/12 border border-brand-blue/25 flex items-center justify-center text-brand-blue text-lg flex-shrink-0 group-hover:bg-brand-blue/20 transition-all duration-200">
-                      <FaWhatsapp />
-                    </div>
-                    <div>
-                      <p className="text-white text-sm font-semibold">
-                        {r.label}
-                      </p>
-                      <p className="text-neutral-400 text-xs">
-                        {r.phoneDisplay}
-                      </p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

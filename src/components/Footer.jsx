@@ -13,20 +13,11 @@ import { useTranslation } from "react-i18next";
 import { scrollToSection, scrollToTop } from "../hooks/useLenis";
 import useLangRoute, { stripLangPrefix } from "../hooks/useLangRoute";
 
-// Two regional WhatsApp numbers — keep in sync with ContactSection.jsx
-// (label/message come from translations; only the routing data lives here)
-const REGION_META = [
-  {
-    id: "lk",
-    phoneDisplay: "+94 77 297 5000",
-    whatsapp: "94772975000",
-  },
-  {
-    id: "ca",
-    phoneDisplay: "+1 (250) 885-5678",
-    whatsapp: "12508855678",
-  },
-];
+// Single WhatsApp contact (Canada) — keep in sync with Navbar.jsx / ContactSection.jsx
+const CONTACT = {
+  phoneDisplay: "+1 (250) 885-5678",
+  whatsapp: "12508855678",
+};
 
 const COMPANY_LINKS = [
   { key: "about", id: "about" },
@@ -55,12 +46,6 @@ export default function Footer() {
   const location = useLocation();
   const { buildPath } = useLangRoute();
   const canonicalPath = stripLangPrefix(location.pathname);
-
-  const REGIONS = REGION_META.map((r) => ({
-    ...r,
-    label: t(`footer.regions.${r.id}.label`),
-    defaultMessage: t(`navbar.regions.${r.id}.message`),
-  }));
 
   const SERVICES = t("footer.services", { returnObjects: true });
 
@@ -246,22 +231,17 @@ export default function Footer() {
               {t("footer.contactHeading")}
             </h4>
             <ul className="flex flex-col gap-3">
-              {REGIONS.map((r) => (
-                <li key={r.id} className="flex items-start gap-2.5">
-                  <FaWhatsapp className="text-brand-blue text-xs mt-1 flex-shrink-0" />
-                  <a
-                    href={`https://wa.me/${r.whatsapp}?text=${encodeURIComponent(r.defaultMessage)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200"
-                  >
-                    <span className="text-neutral-500 text-xs mr-1.5">
-                      {r.label}:
-                    </span>
-                    {r.phoneDisplay}
-                  </a>
-                </li>
-              ))}
+              <li className="flex items-start gap-2.5">
+                <FaWhatsapp className="text-brand-blue text-xs mt-1 flex-shrink-0" />
+                <a
+                  href={`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(t("navbar.whatsappMessage"))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-400 text-sm hover:text-brand-blue transition-colors duration-200"
+                >
+                  {CONTACT.phoneDisplay}
+                </a>
+              </li>
               <li className="flex items-start gap-2.5">
                 <FaEnvelope className="text-brand-blue text-xs mt-1 flex-shrink-0" />
                 <a

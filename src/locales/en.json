@@ -19,17 +19,8 @@
     },
     "chatWithUs": "Chat with Us",
     "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hi RightClicks, I'd like to know more about your IT services.",
     "toggleMenu": "Toggle menu",
-    "regions": {
-      "lk": {
-        "label": "Sri Lanka",
-        "message": "Hi RightClicks, I'd like to know more about your IT services."
-      },
-      "ca": {
-        "label": "Canada",
-        "message": "Hi RightClicks, I'd like to know more about your IT services."
-      }
-    },
     "language": {
       "en": "EN",
       "fr": "FR",
@@ -60,10 +51,6 @@
       "resources": "Resources"
     },
     "contactHeading": "Contact Us",
-    "regions": {
-      "lk": { "label": "Sri Lanka" },
-      "ca": { "label": "Canada" }
-    },
     "copyright": "© {{year}} RightClicks. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
@@ -267,15 +254,6 @@
       "phone": "Phone",
       "company": "Company",
       "message": "Message"
-    },
-    "regions": {
-      "lk": { "label": "Sri Lanka" },
-      "ca": { "label": "Canada" }
-    },
-    "regionModal": {
-      "title": "Choose a region",
-      "subtitle": "We'll open WhatsApp with your message ready to send.",
-      "close": "Close"
     }
   },
   "careers": {
