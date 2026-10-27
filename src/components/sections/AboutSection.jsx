@@ -91,28 +91,6 @@ export default function AboutSection() {
 
               {/* RightClicks branding overlay */}
               <Logo3DBadge />
-
-              {/* Years badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={viewportOnce}
-                transition={{
-                  delay: 0.5,
-                  duration: 0.6,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="absolute bottom-6 left-6 bg-brand-blue rounded-xl px-5 py-4 shadow-blue-glow"
-              >
-                <p className="text-white text-3xl font-extrabold leading-none">
-                  {t("about.yearsBadge.value")}
-                </p>
-                <p className="text-white/80 text-xs mt-1 leading-tight">
-                  {t("about.yearsBadge.label")}
-                  <br />
-                  {t("about.yearsBadge.labelLine2")}
-                </p>
-              </motion.div>
             </div>
 
             {/* 500+ businesses card — bottom right, overlapping */}
