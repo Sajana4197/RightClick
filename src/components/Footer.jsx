@@ -255,8 +255,16 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Service areas */}
+        <div className="mt-10 flex items-start gap-2.5">
+          <FaMapMarkerAlt className="text-brand-blue text-xs mt-[3px] flex-shrink-0" />
+          <p className="text-neutral-400 text-sm leading-relaxed">
+            {t("footer.serviceAreas")}
+          </p>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-dark-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-6 pt-6 border-t border-dark-400/40 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-neutral-500 text-xs">
             {t("footer.copyright", { year })}
           </p>

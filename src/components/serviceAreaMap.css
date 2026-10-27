@@ -1,0 +1,67 @@
+/* Dark theme overrides for the Leaflet service-area map */
+
+.rc-map {
+  background: #050a14;
+}
+
+/* OSM tiles ship light — invert + hue-rotate flips them to a dark basemap while
+   keeping label text readable. Scoped to the tile pane so markers stay blue. */
+.rc-map .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88)
+    saturate(0.55);
+}
+
+/* City marker — glowing map pin. Grows from its tip on hover. */
+.rc-pin {
+  display: block;
+  transform-origin: 50% 100%;
+  filter: drop-shadow(0 0 6px rgba(30, 144, 255, 0.85));
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.rc-pin-wrap:hover .rc-pin,
+.rc-pin-wrap:focus .rc-pin {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 13px rgba(30, 144, 255, 1));
+}
+
+/* Tooltip showing the city name */
+.rc-map .rc-tip {
+  background: rgba(8, 14, 28, 0.95);
+  border: 1px solid rgba(30, 144, 255, 0.45);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  box-shadow: 0 0 15px rgba(30, 144, 255, 0.2);
+}
+
+.rc-map .rc-tip::before {
+  border-top-color: rgba(30, 144, 255, 0.45);
+}
+
+/* Zoom control */
+.rc-map .leaflet-bar a {
+  background: rgba(8, 14, 28, 0.9);
+  border-bottom-color: rgba(30, 144, 255, 0.2);
+  color: #a0b0d8;
+}
+
+.rc-map .leaflet-bar a:hover {
+  background: rgba(30, 144, 255, 0.2);
+  color: #fff;
+}
+
+/* Attribution */
+.rc-map .leaflet-control-attribution {
+  background: rgba(5, 10, 20, 0.75);
+  color: #556090;
+  font-size: 9px;
+}
+
+.rc-map .leaflet-control-attribution a {
+  color: #7888b8;
+}

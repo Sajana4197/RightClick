@@ -51,6 +51,7 @@
       "resources": "Resources"
     },
     "contactHeading": "Contact Us",
+    "serviceAreas": "Serving Vancouver, Surrey, Victoria, Nanaimo, Kamloops, Kelowna and communities across British Columbia.",
     "copyright": "© {{year}} RightClicks. All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service"
@@ -247,6 +248,14 @@
     "divider": "Or contact us directly",
     "callUs": "Call Us",
     "emailUs": "Email Us",
+    "serviceAreas": {
+      "heading": "Areas We Serve",
+      "mapLabel": "Map of the cities RightClicks serves across British Columbia",
+      "groups": {
+        "britishColumbia": "British Columbia",
+        "victoria": "Victoria"
+      }
+    },
     "whatsappMessage": {
       "inquiry": "New website inquiry",
       "name": "Name",

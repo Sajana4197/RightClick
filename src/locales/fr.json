@@ -51,6 +51,7 @@
       "resources": "Ressources"
     },
     "contactHeading": "Contactez-nous",
+    "serviceAreas": "Au service de Vancouver, Surrey, Victoria, Nanaimo, Kamloops, Kelowna et des collectivités de toute la Colombie-Britannique.",
     "copyright": "© {{year}} RightClicks. Tous droits réservés.",
     "privacyPolicy": "Politique de confidentialité",
     "termsOfService": "Conditions d'utilisation"
@@ -247,6 +248,14 @@
     "divider": "Ou contactez-nous directement",
     "callUs": "Appelez-nous",
     "emailUs": "Écrivez-nous",
+    "serviceAreas": {
+      "heading": "Zones desservies",
+      "mapLabel": "Carte des villes desservies par RightClicks en Colombie-Britannique",
+      "groups": {
+        "britishColumbia": "Colombie-Britannique",
+        "victoria": "Victoria"
+      }
+    },
     "whatsappMessage": {
       "inquiry": "Nouvelle demande depuis le site web",
       "name": "Nom",

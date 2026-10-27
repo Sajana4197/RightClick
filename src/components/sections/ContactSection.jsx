@@ -1,5 +1,5 @@
 // src/components/sections/ContactSection.jsx
-import { useState } from "react";
+import { Fragment, Suspense, lazy, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
@@ -12,6 +12,7 @@ import {
   FaBolt,
   FaShieldAlt,
   FaGlobe,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 import {
   fadeInUp,
@@ -21,6 +22,9 @@ import {
   viewportOnce,
 } from "../../animations/variants";
 import SendButton from "../SendButton";
+
+// Leaflet is heavy — keep it out of this section's chunk
+const ServiceAreaMap = lazy(() => import("../ServiceAreaMap"));
 
 // Single WhatsApp/phone contact (Canada) — keep in sync with Navbar.jsx / Footer.jsx
 const CONTACT = {
@@ -44,6 +48,36 @@ const HIGHLIGHTS_META = [
   { id: "secureConsultation", icon: <FaShieldAlt /> },
   { id: "globalSupport", icon: <FaGlobe /> },
 ];
+
+// City names are proper nouns — only the group labels are translated
+const SERVICE_AREAS = [
+  {
+    id: "britishColumbia",
+    cities: [
+      { name: "Vancouver", lat: 49.2827, lng: -123.1207 },
+      { name: "Richmond", lat: 49.1666, lng: -123.1336 },
+      { name: "New Westminster", lat: 49.2057, lng: -122.911 },
+      { name: "Surrey", lat: 49.1913, lng: -122.849 },
+      { name: "Langley", lat: 49.1044, lng: -122.6603 },
+      { name: "White Rock / South Surrey", lat: 49.0255, lng: -122.8029 },
+    ],
+  },
+  {
+    id: "victoria",
+    cities: [
+      { name: "Nanaimo", lat: 49.1659, lng: -123.9401 },
+      { name: "Courtenay", lat: 49.6841, lng: -124.9936 },
+      { name: "Campbell River", lat: 50.0244, lng: -125.2475 },
+      { name: "Kamloops", lat: 50.6745, lng: -120.3273 },
+      { name: "Merritt", lat: 50.1128, lng: -120.7862 },
+      { name: "Kelowna", lat: 49.888, lng: -119.496 },
+      { name: "Vernon", lat: 50.267, lng: -119.272 },
+      { name: "Penticton", lat: 49.4991, lng: -119.5937 },
+    ],
+  },
+];
+
+const ALL_CITIES = SERVICE_AREAS.flatMap((area) => area.cities);
 
 export default function ContactSection() {
   const { t } = useTranslation();
@@ -350,6 +384,55 @@ export default function ContactSection() {
                     </p>
                   </a>
                 ))}
+              </div>
+            </div>
+
+            {/* Service areas */}
+            <div className="mt-6 pt-5 border-t border-dark-400/40">
+              <div className="flex items-center gap-2.5 mb-4">
+                <FaMapMarkerAlt className="text-brand-blue text-xs flex-shrink-0" />
+                <p className="text-brand-blue text-xs font-semibold uppercase tracking-wider whitespace-nowrap">
+                  {t("contact.serviceAreas.heading")}
+                </p>
+                <span className="flex-1 h-px bg-gradient-to-r from-brand-blue/30 to-transparent" />
+              </div>
+
+              <div className="grid lg:grid-cols-[1.15fr_1fr] gap-4 items-start">
+                <div className="h-[260px] rounded-xl overflow-hidden border border-brand-blue/15">
+                  <Suspense
+                    fallback={<div className="w-full h-full bg-dark-900" />}
+                  >
+                    <ServiceAreaMap
+                      cities={ALL_CITIES}
+                      ariaLabel={t("contact.serviceAreas.mapLabel")}
+                    />
+                  </Suspense>
+                </div>
+
+                <div className="grid gap-4">
+                  {SERVICE_AREAS.map((area) => (
+                    <div
+                      key={area.id}
+                      className="border-l-2 border-brand-blue/40 pl-3.5"
+                    >
+                      <p className="text-white text-[13px] font-semibold mb-1.5">
+                        {t(`contact.serviceAreas.groups.${area.id}`)}
+                      </p>
+                      <p className="text-neutral-400 text-xs leading-relaxed">
+                        {area.cities.map((city, i) => (
+                          <Fragment key={city.name}>
+                            {i > 0 && (
+                              <span className="text-brand-blue/50 mx-1.5">
+                                ·
+                              </span>
+                            )}
+                            {city.name}
+                          </Fragment>
+                        ))}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
